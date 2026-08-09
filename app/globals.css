@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fff8f5;
+  color: #231a13;
+  font-family: var(--font-noto-thai), var(--font-manrope), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: #e3c27e;
+  color: #231a13;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0c5b5;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7f7668;
+}
+
+.glass-nav {
+  background: rgba(255, 248, 245, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid #7f7668;
+}
+
+.lux-border {
+  border: 1px solid #d0c5b5;
+}
+
+.lux-border-gold {
+  border: 1px solid #e3c27e;
+}
+
+.nav-link,
+.nav-link-hover {
+  position: relative;
+}
+
+.nav-link::after,
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #e3c27e;
+  transition: width 0.3s ease;
+}
+
+.nav-link-hover::after {
+  bottom: -2px;
+  background-color: #b89a5a;
+}
+
+.nav-link:hover::after,
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+}
+
+.admin-price-input {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  -moz-appearance: textfield;
+}
+
+.admin-price-input::-webkit-outer-spin-button,
+.admin-price-input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none !important;
+  border-bottom-color: #745b21 !important;
+}
+
+.btn-primary {
+  @apply bg-on-surface text-on-primary font-label-caps text-label-caps py-4 px-8 uppercase tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300;
+}
+
+.btn-ghost {
+  @apply border border-outline text-on-surface font-label-caps text-label-caps py-4 px-8 uppercase tracking-widest hover:bg-surface-container-high transition-colors duration-300;
+}
+
+.input-minimal {
+  border: none;
+  border-bottom: 1px solid #d0c5b5;
+  border-radius: 0;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.input-minimal:focus {
+  box-shadow: none;
+  border-bottom-color: #745b21;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
