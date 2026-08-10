@@ -29,8 +29,8 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
           src={activeImage.src}
           alt={`${title}: ${activeImage.alt}`}
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-on-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-        <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-on-surface/70 text-on-primary px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-surface-dim/85 text-on-surface px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Icon name="search" size={16} />
           <span className="font-label-caps text-label-caps">ขยายภาพ</span>
         </div>

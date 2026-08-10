@@ -44,12 +44,12 @@ export function DashboardActions({ title = "ลงรายการใหม่
         {showListingActions ? (
           <>
             <button className="px-6 py-3 border border-outline text-on-surface font-label-caps text-label-caps hover:bg-surface-container transition-colors" onClick={saveDraft} type="button">บันทึกร่าง</button>
-            <button className="px-6 py-3 bg-on-surface text-on-secondary font-label-caps text-label-caps hover:bg-primary transition-colors flex items-center gap-2" onClick={publishListing} type="button">
+            <button className="px-6 py-3 bg-primary text-on-primary font-label-caps text-label-caps hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-2" onClick={publishListing} type="button">
               เผยแพร่รายการ <Icon name="arrow-right" size={16} />
             </button>
           </>
         ) : (
-          <Link className="inline-flex items-center gap-2 bg-on-surface px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface" href="/admin#add-item">
+          <Link className="inline-flex items-center gap-2 bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container" href="/admin#add-item">
             เพิ่มรายการใหม่ <Icon name="arrow-right" size={16} />
           </Link>
         )}

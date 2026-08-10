@@ -49,7 +49,7 @@ export function AdminPinGate({ configured }: AdminPinGateProps) {
       <div className="mx-auto flex min-h-[70vh] w-full max-w-md items-center justify-center">
         <section className="w-full border border-outline-variant bg-surface-container-lowest p-stack-lg shadow-xl">
           <div className="mb-stack-lg text-center">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-on-surface text-on-primary">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary">
               <Icon name="shield-check" size={30} />
             </div>
             <p className="font-label-caps text-label-caps tracking-widest text-primary">KORN &amp; COINS ADMIN</p>
@@ -77,14 +77,14 @@ export function AdminPinGate({ configured }: AdminPinGateProps) {
                   value={pin}
                 />
               </div>
-              {error ? <p className="border border-red-300 bg-red-50 px-4 py-3 text-center font-body-md text-sm text-red-700" role="alert">{error}</p> : null}
-              <button className="flex w-full items-center justify-center gap-2 bg-on-surface px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface disabled:cursor-not-allowed disabled:opacity-50" disabled={isSubmitting || pin.length === 0} type="submit">
+              {error ? <p className="border border-error/40 bg-error-container px-4 py-3 text-center font-body-md text-sm text-on-error-container" role="alert">{error}</p> : null}
+              <button className="flex w-full items-center justify-center gap-2 bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container disabled:cursor-not-allowed disabled:opacity-50" disabled={isSubmitting || pin.length === 0} type="submit">
                 {isSubmitting ? "กำลังตรวจสอบ..." : "เข้าสู่พื้นที่ผู้ดูแล"}
                 <Icon name="arrow-right" size={16} />
               </button>
             </form>
           ) : (
-            <p className="border border-amber-300 bg-amber-50 px-4 py-3 text-center font-body-md text-sm leading-6 text-amber-800" role="alert">
+            <p className="border border-primary/40 bg-primary-container/25 px-4 py-3 text-center font-body-md text-sm leading-6 text-on-primary-container" role="alert">
               ระบบผู้ดูแลยังไม่ได้ตั้งค่า PIN กรุณาตั้งค่า <code>ADMIN_PIN</code> และ <code>ADMIN_SESSION_SECRET</code> ก่อนใช้งาน
             </p>
           )}

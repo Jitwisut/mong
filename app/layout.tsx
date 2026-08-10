@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="th" className="light" data-scroll-behavior="smooth">
+    <html lang="th" className="dark" data-scroll-behavior="smooth">
       <body className={`${manrope.variable} ${playfair.variable} ${notoSansThai.variable}`}>
         <WishlistProvider>{children}</WishlistProvider>
       </body>

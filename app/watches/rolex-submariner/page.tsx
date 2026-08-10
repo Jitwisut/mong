@@ -98,7 +98,7 @@ function CatalogFilter({ href, label, active }: { href: string; label: string; a
   return (
     <Link
       aria-current={active ? "page" : undefined}
-      className={`border px-4 py-2 font-label-caps text-label-caps transition-colors ${active ? "border-on-surface bg-on-surface text-on-primary" : "border-outline text-on-surface hover:border-primary hover:text-primary"}`}
+      className={`border px-4 py-2 font-label-caps text-label-caps transition-colors ${active ? "border-primary bg-primary text-on-primary" : "border-outline text-on-surface hover:border-primary hover:text-primary"}`}
       href={href}
     >
       {label}

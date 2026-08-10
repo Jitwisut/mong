@@ -139,7 +139,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
       </nav>
 
       {searchOpen ? (
-        <div className="fixed inset-0 z-[70] bg-on-surface/50 p-4 md:p-10" onClick={closeSearch}>
+        <div className="fixed inset-0 z-[70] bg-black/65 p-4 md:p-10" onClick={closeSearch}>
           <section aria-label="ค้นหาของสะสม" aria-modal="true" className="max-w-2xl mx-auto bg-surface-container-lowest border border-outline-variant shadow-2xl" onClick={(event) => event.stopPropagation()} role="dialog">
             <div className="flex justify-between items-center p-5 border-b border-outline-variant">
               <h2 className="font-headline-md text-headline-md text-on-surface">ค้นหาของสะสม</h2>

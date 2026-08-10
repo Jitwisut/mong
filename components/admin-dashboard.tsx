@@ -183,9 +183,9 @@ function AdminOverview({
             <h3 className="font-headline-md text-headline-md text-on-surface">สถานะระบบ</h3>
           </div>
           <ul className="mt-stack-md space-y-3 font-body-md text-on-surface-variant">
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> PIN ผู้ดูแลทำงานอยู่</li>
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> แคตตาล็อกสินค้าออนไลน์พร้อมใช้งาน</li>
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> {databaseConfigured ? "ตั้งค่า PostgreSQL แล้ว" : "ใช้ข้อมูลตัวอย่างจนกว่าจะตั้งค่า PostgreSQL"}</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> PIN ผู้ดูแลทำงานอยู่</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> แคตตาล็อกสินค้าออนไลน์พร้อมใช้งาน</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> {databaseConfigured ? "ตั้งค่า PostgreSQL แล้ว" : "ใช้ข้อมูลตัวอย่างจนกว่าจะตั้งค่า PostgreSQL"}</li>
           </ul>
         </div>
       </div>
@@ -330,8 +330,8 @@ function AdminAddItemPanel({
           </div>
         </FormSection>
 
-        {feedback ? <p className={`border-l-2 px-4 py-3 font-body-md text-sm ${feedback.tone === "success" ? "border-primary text-primary" : "border-red-700 text-red-700"}`} role="status">{feedback.message}</p> : null}
-        <button className="inline-flex items-center gap-2 bg-on-surface px-6 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface disabled:cursor-wait disabled:opacity-60" disabled={isSubmitting} type="submit">
+        {feedback ? <p className={`border-l-2 px-4 py-3 font-body-md text-sm ${feedback.tone === "success" ? "border-primary text-primary" : "border-error text-error"}`} role="status">{feedback.message}</p> : null}
+        <button className="inline-flex items-center gap-2 bg-primary px-6 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container disabled:cursor-wait disabled:opacity-60" disabled={isSubmitting} type="submit">
           {isSubmitting ? "กำลังบันทึก..." : "บันทึกสินค้า"} <Icon name="arrow-right" size={16} />
         </button>
       </form>
@@ -365,7 +365,7 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
                   <p className="mt-1 max-w-md text-sm text-on-surface-variant">{product.shortDescription}</p>
                 </td>
                 <td className="whitespace-nowrap px-5 py-4 font-body-md text-sm text-on-surface-variant">{categoryLabels[product.category]}</td>
-                <td className="whitespace-nowrap px-5 py-4"><span className="border border-primary px-2 py-1 font-label-caps text-[10px] tracking-wider text-primary">{product.status}</span></td>
+                <td className="whitespace-nowrap px-5 py-4"><span className="bg-secondary px-2 py-1 font-label-caps text-[10px] tracking-wider text-on-secondary">{product.status}</span></td>
                 <td className="whitespace-nowrap px-5 py-4 text-right font-body-md font-semibold text-primary">{product.price}</td>
               </tr>
             ))}
@@ -392,7 +392,7 @@ function AdminSales() {
       <div className="border border-outline-variant bg-surface-container-lowest p-stack-lg">
         <h3 className="font-headline-md text-headline-md text-on-surface">จัดการการติดต่อ</h3>
         <p className="mt-2 font-body-md leading-7 text-on-surface-variant">ตอนนี้ทีมงานสามารถเปิดหน้าติดต่อเพื่ออ่านช่องทางโทรศัพท์ อีเมล และนัดหมายหน้าร้านได้โดยตรง</p>
-        <Link className="mt-5 inline-flex items-center gap-2 border border-on-surface px-5 py-3 font-label-caps text-label-caps text-on-surface transition-colors hover:bg-on-surface hover:text-on-primary" href="/contact">เปิดหน้าติดต่อ <Icon name="arrow-right" size={16} /></Link>
+        <Link className="mt-5 inline-flex items-center gap-2 border border-primary px-5 py-3 font-label-caps text-label-caps text-primary transition-colors hover:bg-primary hover:text-on-primary" href="/contact">เปิดหน้าติดต่อ <Icon name="arrow-right" size={16} /></Link>
       </div>
     </section>
   );
@@ -413,7 +413,7 @@ function AdminSettings() {
         <TextField id="store-phone" label="เบอร์โทรศัพท์" placeholder="088-788-9878" />
         <TextField id="store-email" label="อีเมล" placeholder="amkorn.n@gmail.com" />
         <div className="flex flex-wrap items-center gap-4">
-          <button className="bg-on-surface px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface" type="submit">บันทึกการตั้งค่า</button>
+          <button className="bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container" type="submit">บันทึกการตั้งค่า</button>
           {saved ? <p className="font-body-md text-sm text-primary" role="status">บันทึกข้อมูลในหน้าจอนี้แล้ว</p> : null}
         </div>
         <p className="border-l-2 border-primary px-4 font-body-md text-sm leading-6 text-on-surface-variant">หมายเหตุ: ตอนนี้ปุ่มนี้เป็นการทำงานระดับหน้าจอเท่านั้น หากต้องการให้ข้อมูลคงอยู่ทุกเครื่อง ต้องเชื่อมฐานข้อมูล</p>

@@ -74,9 +74,9 @@ export default async function ContactPage() {
 
         <div className="mt-stack-xl h-64 md:h-96 w-full border border-outline-variant animate-fade-in opacity-0 delay-300 relative group overflow-hidden">
           <Image fill className="object-cover object-center transform transition-transform duration-700 group-hover:scale-105" sizes="100vw" src="/images/shop-counter.jpg" alt="บรรยากาศร้าน KORN & COINS และป้ายบริการรับซื้อขายเหรียญ" />
-          <div className="absolute inset-0 bg-on-background/25 group-hover:bg-transparent transition-colors duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
           <div className="absolute bottom-0 left-0 p-6 max-w-xl">
-            <p className="font-headline-md text-headline-md text-on-primary">แวะมาพูดคุยเรื่องของสะสมกับเรา</p>
+            <p className="font-headline-md text-headline-md text-on-surface">แวะมาพูดคุยเรื่องของสะสมกับเรา</p>
           </div>
         </div>
       </main>

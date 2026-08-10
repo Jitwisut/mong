@@ -70,7 +70,7 @@ export function ContactForm() {
         {submitted ? (
           <p className="flex items-center gap-2 font-body-md text-sm text-primary" role="status"><Icon name="check" size={18} /> ส่งข้อความเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุด</p>
         ) : null}
-        <button className="mt-stack-lg px-8 py-4 bg-on-background text-on-primary font-label-caps text-label-caps tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300 rounded-none w-full md:w-auto inline-flex items-center justify-center gap-2" type="submit">
+        <button className="mt-stack-lg px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps tracking-widest hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300 rounded-none w-full md:w-auto inline-flex items-center justify-center gap-2" type="submit">
           ส่งข้อความ <Icon name="send" size={16} />
         </button>
       </form>

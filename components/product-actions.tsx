@@ -41,7 +41,7 @@ export function ProductActions({ product }: ProductActionsProps) {
       </div>
 
       {dialogMode ? (
-        <div className="fixed inset-0 z-[80] bg-on-surface/60 p-4 md:p-10 flex items-center justify-center" onClick={closeDialog}>
+        <div className="fixed inset-0 z-[80] bg-black/65 p-4 md:p-10 flex items-center justify-center" onClick={closeDialog}>
           <section aria-label={dialogMode === "purchase" ? "สอบถามเพื่อสั่งซื้อ" : "ขอประเมินราคา"} aria-modal="true" className="w-full max-w-lg bg-surface-container-lowest border border-outline-variant shadow-2xl" onClick={(event) => event.stopPropagation()} role="dialog">
             <div className="flex items-center justify-between p-5 border-b border-outline-variant">
               <div>

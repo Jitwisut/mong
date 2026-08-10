@@ -42,7 +42,7 @@ export default async function HomePage() {
               ศูนย์รวมพระเครื่อง เหรียญ และของสะสม ผ่านการคัดสรร ตรวจสอบ และส่งต่อระหว่างนักสะสม
             </Reveal>
             <Reveal as="div" className="flex flex-col sm:flex-row gap-4" style={{ transitionDelay: "0.4s" }}>
-              <Link className="bg-primary-fixed-dim text-on-surface font-label-caps text-label-caps px-8 py-4 hover:bg-on-surface hover:text-on-primary transition-colors duration-300 font-thai-support" href="#categories">
+              <Link className="bg-primary-fixed-dim text-on-primary-fixed font-label-caps text-label-caps px-8 py-4 hover:bg-secondary hover:text-on-secondary transition-colors duration-300 font-thai-support" href="#categories">
                 เลือกชมของสะสม
               </Link>
             </Reveal>
@@ -70,7 +70,7 @@ export default async function HomePage() {
                     src={category.image}
                     alt={category.alt}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-on-surface/85 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6">
                     <h3 className="font-headline-md text-headline-md text-on-primary mb-2">{category.name}</h3>
                     <p className="font-body-md text-body-md text-on-secondary/80">{category.description}</p>
@@ -113,8 +113,8 @@ export default async function HomePage() {
               {shopGallery.map((image) => (
                 <Reveal key={image.id} className="group relative h-56 overflow-hidden bg-surface-container-lowest" style={{ transitionDelay: `${image.id * 50}ms` }}>
                   <Image fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" src={image.src} alt={image.alt} />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-on-surface/90 to-transparent px-4 pt-10 pb-4">
-                    <p className="font-body-md text-body-md text-on-primary">{image.caption}</p>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-4 pt-10 pb-4">
+                    <p className="font-body-md text-body-md text-on-surface">{image.caption}</p>
                   </div>
                 </Reveal>
               ))}
