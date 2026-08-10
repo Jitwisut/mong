@@ -39,9 +39,8 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [query, setQuery] = useState("");
   const { items } = useWishlist();
-  const isProduct = variant === "product";
   const actionTextClass = variant === "home" ? "text-primary" : variant === "product" ? "text-on-surface" : "text-on-surface-variant";
-  const navLinkClass = isProduct ? "hidden md:flex gap-stack-lg items-center" : variant === "contact" ? "hidden md:flex space-x-gutter" : "hidden md:flex space-x-6";
+  const navLinkClass = "hidden md:flex items-center gap-stack-lg";
   const searchItems = useMemo(
     () => [
       ...baseSearchItems,
@@ -102,17 +101,8 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
           className={`absolute inset-0 -z-10 ${variant === "home" ? "glass-nav" : "bg-surface/60 backdrop-blur-md border-b border-outline-variant"}`}
         />
         <div className="relative flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
-          {isProduct ? (
-            <div className="flex items-center gap-stack-lg">
-              {brand}
-              <div className={navLinkClass}>{links}</div>
-            </div>
-          ) : (
-            <>
-              {brand}
-              <div className={navLinkClass}>{links}</div>
-            </>
-          )}
+          {brand}
+          <div className={navLinkClass}>{links}</div>
 
           <div className="flex items-center space-x-4">
             <div className={`${mobileMenu ? "hidden md:flex" : "flex"} space-x-2`}>

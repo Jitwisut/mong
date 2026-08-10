@@ -19,14 +19,14 @@ export default async function ContactPage() {
       <PublicNav searchProducts={catalogProducts} variant="contact" mobileMenu />
 
       <main className="flex-grow w-full">
-        <section className="text-center px-margin-mobile md:px-margin-desktop pt-stack-xl pb-stack-lg animate-fade-in opacity-0">
+        <section className="text-center px-margin-mobile md:px-margin-desktop pt-12 md:pt-stack-xl pb-stack-lg animate-fade-in opacity-0">
           <p className="font-label-caps text-label-caps text-primary tracking-[0.2em] mb-stack-sm">KORN &amp; COINS · ติดต่อเรา</p>
           <h1 className="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-stack-sm">ติดต่อ KORN &amp; COINS</h1>
           <span aria-hidden="true" className="mx-auto mb-stack-sm block h-px w-16 bg-primary" />
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">สอบถามราคา ขอประเมิน ฝากขาย หรือนัดหมายเข้าชมของสะสม ทีมงานพร้อมให้คำแนะนำ</p>
         </section>
 
-        <div className="max-w-container mx-auto px-margin-mobile md:px-margin-desktop pb-stack-xl">
+        <div className="max-w-container mx-auto px-margin-mobile md:px-margin-desktop pb-12 md:pb-stack-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
             <ContactForm />
 

@@ -58,7 +58,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           </Link>
         </div>
 
-        <section className="w-full max-w-container mx-auto px-gutter pb-stack-xl">
+        <section className="w-full max-w-container mx-auto px-gutter pb-12 md:pb-stack-xl">
           <div className="grid grid-cols-1 gap-gutter lg:grid-cols-12 lg:gap-margin-desktop">
             <ProductGallery images={product.gallery} title={product.name} />
 
@@ -103,7 +103,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         </section>
 
         {relatedProducts.length > 0 ? (
-          <section className="border-t border-outline-variant bg-surface-container-low px-gutter py-stack-xl">
+          <section className="border-t border-outline-variant bg-surface-container-low px-gutter py-12 md:py-stack-xl">
             <div className="mx-auto w-full max-w-container">
               <div className="mb-stack-lg">
                 <p className="font-label-caps text-label-caps text-primary">เลือกชมต่อ</p>

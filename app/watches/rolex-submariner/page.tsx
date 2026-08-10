@@ -49,7 +49,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       <PublicNav active={selectedCategory} searchProducts={catalogProducts} variant="product" mobileMenu />
 
       <main className="flex-grow">
-        <section className="border-b border-outline-variant bg-surface-container-low px-gutter py-stack-xl">
+        <section className="border-b border-outline-variant bg-surface-container-low px-gutter py-12 md:py-stack-xl">
           <div className="mx-auto grid w-full max-w-container grid-cols-1 items-end gap-stack-lg lg:grid-cols-[1fr_auto]">
             <div>
               <div className="mb-stack-md flex items-center gap-2 font-label-caps text-label-caps text-primary">
@@ -67,7 +67,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           </div>
         </section>
 
-        <section className="w-full max-w-container mx-auto px-gutter py-stack-xl">
+        <section className="w-full max-w-container mx-auto px-gutter py-12 md:py-stack-xl">
           <div className="mb-stack-lg flex flex-col gap-4 border-b border-outline-variant pb-stack-md md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap gap-2" aria-label="ตัวกรองหมวดสินค้า">
               <CatalogFilter href="/watches/rolex-submariner" label="ทั้งหมด" active={!selectedCategory} />

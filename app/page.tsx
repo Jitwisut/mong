@@ -79,7 +79,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="categories" className="py-stack-xl px-gutter max-w-container mx-auto">
+        <section id="categories" className="py-12 md:py-stack-xl px-gutter max-w-container mx-auto">
           <div className="flex flex-col gap-4 mb-stack-lg md:flex-row md:items-end md:justify-between">
             <div>
               <p className="font-label-caps text-label-caps text-primary">หมวดหมู่ยอดนิยม</p>
@@ -114,7 +114,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="products" className="border-y border-outline-variant bg-surface-container-low py-stack-xl px-gutter">
+        <section id="products" className="border-y border-outline-variant bg-surface-container-low py-12 md:py-stack-xl px-gutter">
           <div className="max-w-container mx-auto">
             <div className="flex flex-col gap-4 mb-stack-lg md:flex-row md:items-end md:justify-between">
               <div>
@@ -130,7 +130,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section id="gallery" className="bg-surface-container-low py-stack-xl px-gutter">
+        <section id="gallery" className="bg-surface-container-low py-12 md:py-stack-xl px-gutter">
           <div className="max-w-container mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-stack-lg items-start mb-stack-lg">
               <Reveal className="bg-surface-container-lowest p-5 border border-outline-variant text-center">
