@@ -84,19 +84,27 @@ export function AdminDashboard({ products, databaseConfigured }: AdminDashboardP
           <h1 className="font-display-lg text-headline-md tracking-tight text-primary">KORN &amp; COINS</h1>
           <p className="mt-2 font-label-caps text-label-caps text-on-surface-variant">พื้นที่ผู้ดูแล</p>
         </div>
-        <nav aria-label="เมนูผู้ดูแล" className="flex-1 space-y-stack-md p-gutter">
-          {sidebarItems.map((item) => (
-            <Link
-              key={item.section}
-              aria-current={activeSection === item.section ? "page" : undefined}
-              className={`group flex items-center gap-3 font-body-md text-body-md transition-colors ${activeSection === item.section ? "font-bold text-primary" : "text-on-surface-variant hover:text-primary"}`}
-              href={`/admin#${item.section}`}
-              onClick={() => selectSection(item.section)}
-            >
-              <Icon name={item.icon} className={activeSection === item.section ? "text-primary" : "transition-colors group-hover:text-primary"} size={20} />
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="เมนูผู้ดูแล" className="flex-1 space-y-1 p-3">
+          {sidebarItems.map((item) => {
+            const isActive = activeSection === item.section;
+
+            return (
+              <Link
+                key={item.section}
+                aria-current={isActive ? "page" : undefined}
+                className={`group flex items-center gap-3 border-l-2 py-2.5 pl-4 pr-3 font-body-md text-body-md transition-colors ${
+                  isActive
+                    ? "border-primary bg-surface-container text-primary font-semibold"
+                    : "border-transparent text-on-surface-variant hover:border-outline-variant hover:bg-surface-container hover:text-primary"
+                }`}
+                href={`/admin#${item.section}`}
+                onClick={() => selectSection(item.section)}
+              >
+                <Icon name={item.icon} className={isActive ? "text-primary" : "transition-colors group-hover:text-primary"} size={20} />
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
         <div className="mt-auto border-t border-outline-variant p-gutter">
           <div className="flex items-center gap-3">
@@ -156,10 +164,10 @@ function AdminOverview({
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <AdminStat label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
-        <AdminStat label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
-        <AdminStat label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
-        <AdminStat label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="inventory" label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
+        <AdminStat icon="landmark" label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="tag" label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="images" label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
       </div>
 
       <div className="grid grid-cols-1 gap-gutter lg:grid-cols-2">
@@ -193,10 +201,15 @@ function AdminOverview({
   );
 }
 
-function AdminStat({ label, value, detail }: { label: string; value: number; detail: string }) {
+function AdminStat({ icon, label, value, detail }: { icon: IconName; label: string; value: number; detail: string }) {
   return (
     <div className="border border-outline-variant bg-surface-container-lowest p-5">
-      <p className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">{label}</p>
+      <div className="flex items-start justify-between">
+        <p className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">{label}</p>
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-primary/30 bg-primary/10 text-primary">
+          <Icon name={icon} size={16} />
+        </span>
+      </div>
       <p className="mt-3 font-display-lg text-display-lg-mobile text-primary">{value}</p>
       <p className="mt-1 font-body-md text-sm text-on-surface-variant">{detail}</p>
     </div>
@@ -385,9 +398,9 @@ function AdminSales() {
         <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">รวมทางลัดสำหรับติดตามคำถามและนัดหมายจากลูกค้า ข้อมูลชุดนี้จะเชื่อมกับระบบจริงเมื่อเพิ่มฐานข้อมูล</p>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <AdminStat label="สอบถามใหม่" value={3} detail="รอตอบกลับ" />
-        <AdminStat label="รอตรวจสอบ" value={2} detail="รายการสินค้า" />
-        <AdminStat label="นัดหมาย" value={1} detail="รอยืนยันเวลา" />
+        <AdminStat icon="mail" label="สอบถามใหม่" value={3} detail="รอตอบกลับ" />
+        <AdminStat icon="shield-check" label="รอตรวจสอบ" value={2} detail="รายการสินค้า" />
+        <AdminStat icon="map-pin" label="นัดหมาย" value={1} detail="รอยืนยันเวลา" />
       </div>
       <div className="border border-outline-variant bg-surface-container-lowest p-stack-lg">
         <h3 className="font-headline-md text-headline-md text-on-surface">จัดการการติดต่อ</h3>
