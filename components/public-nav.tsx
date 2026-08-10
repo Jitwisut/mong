@@ -96,8 +96,12 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
 
   return (
     <>
-      <nav className={`${variant === "home" ? "glass-nav" : "bg-surface/60 backdrop-blur-md border-b border-outline-variant"} docked full-width top-0 sticky z-50 transition-all duration-300`}>
-        <div className="flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
+      <nav className="docked full-width top-0 sticky z-50 nav-gpu transition-all duration-300">
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 -z-10 ${variant === "home" ? "glass-nav" : "bg-surface/60 backdrop-blur-md border-b border-outline-variant"}`}
+        />
+        <div className="relative flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
           {isProduct ? (
             <div className="flex items-center gap-stack-lg">
               {brand}
@@ -132,7 +136,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
         </div>
 
         {mobileMenu && menuOpen ? (
-          <div className="md:hidden border-t border-outline-variant bg-surface/95 backdrop-blur-md px-gutter py-5 space-y-4">
+          <div className="relative md:hidden border-t border-outline-variant bg-surface/95 backdrop-blur-md px-gutter py-5 space-y-4">
             <div className="flex flex-col gap-4">{links}</div>
           </div>
         ) : null}
