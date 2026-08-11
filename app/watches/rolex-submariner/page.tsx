@@ -58,8 +58,15 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               </div>
               <h1 className="font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">{heading}</h1>
               <p className="mt-stack-sm max-w-2xl font-body-lg text-body-lg text-on-surface-variant">{intro}</p>
+
+              <div className="mt-5 inline-flex items-center gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-2 lg:hidden">
+                <Icon name="inventory" size={16} className="text-primary" />
+                <p className="font-body-md text-sm text-on-surface">
+                  <span className="font-semibold text-primary">{products.length}</span> รายการที่แสดง
+                </p>
+              </div>
             </div>
-            <div className="border-l border-outline-variant pl-5 text-left lg:text-right">
+            <div className="hidden border-l border-outline-variant pl-5 text-right lg:block">
               <p className="font-label-caps text-label-caps text-on-surface-variant">รายการที่แสดง</p>
               <p className="mt-1 font-headline-lg text-headline-lg text-on-surface">{products.length} รายการ</p>
               <p className="mt-1 font-body-md text-sm text-on-surface-variant">อัปเดตและสอบถามสต็อกกับร้านได้</p>
