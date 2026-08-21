@@ -84,19 +84,27 @@ export function AdminDashboard({ products, databaseConfigured }: AdminDashboardP
           <h1 className="font-display-lg text-headline-md tracking-tight text-primary">KORN &amp; COINS</h1>
           <p className="mt-2 font-label-caps text-label-caps text-on-surface-variant">พื้นที่ผู้ดูแล</p>
         </div>
-        <nav aria-label="เมนูผู้ดูแล" className="flex-1 space-y-stack-md p-gutter">
-          {sidebarItems.map((item) => (
-            <Link
-              key={item.section}
-              aria-current={activeSection === item.section ? "page" : undefined}
-              className={`group flex items-center gap-3 font-body-md text-body-md transition-colors ${activeSection === item.section ? "font-bold text-primary" : "text-on-surface-variant hover:text-primary"}`}
-              href={`/admin#${item.section}`}
-              onClick={() => selectSection(item.section)}
-            >
-              <Icon name={item.icon} className={activeSection === item.section ? "text-primary" : "transition-colors group-hover:text-primary"} size={20} />
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="เมนูผู้ดูแล" className="flex-1 space-y-1 p-3">
+          {sidebarItems.map((item) => {
+            const isActive = activeSection === item.section;
+
+            return (
+              <Link
+                key={item.section}
+                aria-current={isActive ? "page" : undefined}
+                className={`group flex items-center gap-3 border-l-2 py-2.5 pl-4 pr-3 font-body-md text-body-md transition-colors ${
+                  isActive
+                    ? "border-primary bg-surface-container text-primary font-semibold"
+                    : "border-transparent text-on-surface-variant hover:border-outline-variant hover:bg-surface-container hover:text-primary"
+                }`}
+                href={`/admin#${item.section}`}
+                onClick={() => selectSection(item.section)}
+              >
+                <Icon name={item.icon} className={isActive ? "text-primary" : "transition-colors group-hover:text-primary"} size={20} />
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
         <div className="mt-auto border-t border-outline-variant p-gutter">
           <div className="flex items-center gap-3">
@@ -156,10 +164,10 @@ function AdminOverview({
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <AdminStat label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
-        <AdminStat label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
-        <AdminStat label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
-        <AdminStat label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="inventory" label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
+        <AdminStat icon="landmark" label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="tag" label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="images" label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
       </div>
 
       <div className="grid grid-cols-1 gap-gutter lg:grid-cols-2">
@@ -183,9 +191,9 @@ function AdminOverview({
             <h3 className="font-headline-md text-headline-md text-on-surface">สถานะระบบ</h3>
           </div>
           <ul className="mt-stack-md space-y-3 font-body-md text-on-surface-variant">
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> PIN ผู้ดูแลทำงานอยู่</li>
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> แคตตาล็อกสินค้าออนไลน์พร้อมใช้งาน</li>
-            <li className="flex items-center gap-2"><Icon name="check" className="text-primary" size={17} /> {databaseConfigured ? "ตั้งค่า PostgreSQL แล้ว" : "ใช้ข้อมูลตัวอย่างจนกว่าจะตั้งค่า PostgreSQL"}</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> PIN ผู้ดูแลทำงานอยู่</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> แคตตาล็อกสินค้าออนไลน์พร้อมใช้งาน</li>
+            <li className="flex items-center gap-2"><Icon name="check" className="text-tertiary" size={17} /> {databaseConfigured ? "ตั้งค่า PostgreSQL แล้ว" : "ใช้ข้อมูลตัวอย่างจนกว่าจะตั้งค่า PostgreSQL"}</li>
           </ul>
         </div>
       </div>
@@ -193,10 +201,15 @@ function AdminOverview({
   );
 }
 
-function AdminStat({ label, value, detail }: { label: string; value: number; detail: string }) {
+function AdminStat({ icon, label, value, detail }: { icon: IconName; label: string; value: number; detail: string }) {
   return (
     <div className="border border-outline-variant bg-surface-container-lowest p-5">
-      <p className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">{label}</p>
+      <div className="flex items-start justify-between">
+        <p className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">{label}</p>
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-primary/30 bg-primary/10 text-primary">
+          <Icon name={icon} size={16} />
+        </span>
+      </div>
       <p className="mt-3 font-display-lg text-display-lg-mobile text-primary">{value}</p>
       <p className="mt-1 font-body-md text-sm text-on-surface-variant">{detail}</p>
     </div>
@@ -330,8 +343,8 @@ function AdminAddItemPanel({
           </div>
         </FormSection>
 
-        {feedback ? <p className={`border-l-2 px-4 py-3 font-body-md text-sm ${feedback.tone === "success" ? "border-primary text-primary" : "border-red-700 text-red-700"}`} role="status">{feedback.message}</p> : null}
-        <button className="inline-flex items-center gap-2 bg-on-surface px-6 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface disabled:cursor-wait disabled:opacity-60" disabled={isSubmitting} type="submit">
+        {feedback ? <p className={`border-l-2 px-4 py-3 font-body-md text-sm ${feedback.tone === "success" ? "border-primary text-primary" : "border-error text-error"}`} role="status">{feedback.message}</p> : null}
+        <button className="inline-flex items-center gap-2 bg-primary px-6 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container disabled:cursor-wait disabled:opacity-60" disabled={isSubmitting} type="submit">
           {isSubmitting ? "กำลังบันทึก..." : "บันทึกสินค้า"} <Icon name="arrow-right" size={16} />
         </button>
       </form>
@@ -365,7 +378,7 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
                   <p className="mt-1 max-w-md text-sm text-on-surface-variant">{product.shortDescription}</p>
                 </td>
                 <td className="whitespace-nowrap px-5 py-4 font-body-md text-sm text-on-surface-variant">{categoryLabels[product.category]}</td>
-                <td className="whitespace-nowrap px-5 py-4"><span className="border border-primary px-2 py-1 font-label-caps text-[10px] tracking-wider text-primary">{product.status}</span></td>
+                <td className="whitespace-nowrap px-5 py-4"><span className="bg-secondary px-2 py-1 font-label-caps text-[10px] tracking-wider text-on-secondary">{product.status}</span></td>
                 <td className="whitespace-nowrap px-5 py-4 text-right font-body-md font-semibold text-primary">{product.price}</td>
               </tr>
             ))}
@@ -385,14 +398,14 @@ function AdminSales() {
         <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">รวมทางลัดสำหรับติดตามคำถามและนัดหมายจากลูกค้า ข้อมูลชุดนี้จะเชื่อมกับระบบจริงเมื่อเพิ่มฐานข้อมูล</p>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <AdminStat label="สอบถามใหม่" value={3} detail="รอตอบกลับ" />
-        <AdminStat label="รอตรวจสอบ" value={2} detail="รายการสินค้า" />
-        <AdminStat label="นัดหมาย" value={1} detail="รอยืนยันเวลา" />
+        <AdminStat icon="mail" label="สอบถามใหม่" value={3} detail="รอตอบกลับ" />
+        <AdminStat icon="shield-check" label="รอตรวจสอบ" value={2} detail="รายการสินค้า" />
+        <AdminStat icon="map-pin" label="นัดหมาย" value={1} detail="รอยืนยันเวลา" />
       </div>
       <div className="border border-outline-variant bg-surface-container-lowest p-stack-lg">
         <h3 className="font-headline-md text-headline-md text-on-surface">จัดการการติดต่อ</h3>
         <p className="mt-2 font-body-md leading-7 text-on-surface-variant">ตอนนี้ทีมงานสามารถเปิดหน้าติดต่อเพื่ออ่านช่องทางโทรศัพท์ อีเมล และนัดหมายหน้าร้านได้โดยตรง</p>
-        <Link className="mt-5 inline-flex items-center gap-2 border border-on-surface px-5 py-3 font-label-caps text-label-caps text-on-surface transition-colors hover:bg-on-surface hover:text-on-primary" href="/contact">เปิดหน้าติดต่อ <Icon name="arrow-right" size={16} /></Link>
+        <Link className="mt-5 inline-flex items-center gap-2 border border-primary px-5 py-3 font-label-caps text-label-caps text-primary transition-colors hover:bg-primary hover:text-on-primary" href="/contact">เปิดหน้าติดต่อ <Icon name="arrow-right" size={16} /></Link>
       </div>
     </section>
   );
@@ -413,7 +426,7 @@ function AdminSettings() {
         <TextField id="store-phone" label="เบอร์โทรศัพท์" placeholder="088-788-9878" />
         <TextField id="store-email" label="อีเมล" placeholder="amkorn.n@gmail.com" />
         <div className="flex flex-wrap items-center gap-4">
-          <button className="bg-on-surface px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary hover:text-on-surface" type="submit">บันทึกการตั้งค่า</button>
+          <button className="bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container" type="submit">บันทึกการตั้งค่า</button>
           {saved ? <p className="font-body-md text-sm text-primary" role="status">บันทึกข้อมูลในหน้าจอนี้แล้ว</p> : null}
         </div>
         <p className="border-l-2 border-primary px-4 font-body-md text-sm leading-6 text-on-surface-variant">หมายเหตุ: ตอนนี้ปุ่มนี้เป็นการทำงานระดับหน้าจอเท่านั้น หากต้องการให้ข้อมูลคงอยู่ทุกเครื่อง ต้องเชื่อมฐานข้อมูล</p>

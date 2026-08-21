@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Noto_Sans_Thai, Playfair_Display } from "next/font/google";
+import { ScrollReset } from "../components/scroll-reset";
 import { WishlistProvider } from "../components/wishlist";
 import "./globals.css";
 
@@ -29,8 +30,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="th" className="light" data-scroll-behavior="smooth">
+    <html lang="th" className="dark" data-scroll-behavior="smooth">
       <body className={`${manrope.variable} ${playfair.variable} ${notoSansThai.variable}`}>
+        <ScrollReset />
         <WishlistProvider>{children}</WishlistProvider>
       </body>
     </html>

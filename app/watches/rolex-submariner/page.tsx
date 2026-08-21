@@ -49,7 +49,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       <PublicNav active={selectedCategory} searchProducts={catalogProducts} variant="product" mobileMenu />
 
       <main className="flex-grow">
-        <section className="border-b border-outline-variant bg-surface-container-low px-gutter py-stack-xl">
+        <section className="border-b border-outline-variant bg-surface-container-low px-gutter py-12 md:py-stack-xl">
           <div className="mx-auto grid w-full max-w-container grid-cols-1 items-end gap-stack-lg lg:grid-cols-[1fr_auto]">
             <div>
               <div className="mb-stack-md flex items-center gap-2 font-label-caps text-label-caps text-primary">
@@ -58,8 +58,15 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               </div>
               <h1 className="font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">{heading}</h1>
               <p className="mt-stack-sm max-w-2xl font-body-lg text-body-lg text-on-surface-variant">{intro}</p>
+
+              <div className="mt-5 inline-flex items-center gap-2 border border-outline-variant bg-surface-container-lowest px-4 py-2 lg:hidden">
+                <Icon name="inventory" size={16} className="text-primary" />
+                <p className="font-body-md text-sm text-on-surface">
+                  <span className="font-semibold text-primary">{products.length}</span> รายการที่แสดง
+                </p>
+              </div>
             </div>
-            <div className="border-l border-outline-variant pl-5 text-left lg:text-right">
+            <div className="hidden border-l border-outline-variant pl-5 text-right lg:block">
               <p className="font-label-caps text-label-caps text-on-surface-variant">รายการที่แสดง</p>
               <p className="mt-1 font-headline-lg text-headline-lg text-on-surface">{products.length} รายการ</p>
               <p className="mt-1 font-body-md text-sm text-on-surface-variant">อัปเดตและสอบถามสต็อกกับร้านได้</p>
@@ -67,7 +74,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           </div>
         </section>
 
-        <section className="w-full max-w-container mx-auto px-gutter py-stack-xl">
+        <section className="w-full max-w-container mx-auto px-gutter py-12 md:py-stack-xl">
           <div className="mb-stack-lg flex flex-col gap-4 border-b border-outline-variant pb-stack-md md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap gap-2" aria-label="ตัวกรองหมวดสินค้า">
               <CatalogFilter href="/watches/rolex-submariner" label="ทั้งหมด" active={!selectedCategory} />
@@ -98,7 +105,7 @@ function CatalogFilter({ href, label, active }: { href: string; label: string; a
   return (
     <Link
       aria-current={active ? "page" : undefined}
-      className={`border px-4 py-2 font-label-caps text-label-caps transition-colors ${active ? "border-on-surface bg-on-surface text-on-primary" : "border-outline text-on-surface hover:border-primary hover:text-primary"}`}
+      className={`border px-4 py-2 font-label-caps text-label-caps transition-colors ${active ? "border-primary bg-primary text-on-primary" : "border-outline text-on-surface hover:border-primary hover:text-primary"}`}
       href={href}
     >
       {label}

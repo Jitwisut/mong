@@ -39,9 +39,8 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [query, setQuery] = useState("");
   const { items } = useWishlist();
-  const isProduct = variant === "product";
   const actionTextClass = variant === "home" ? "text-primary" : variant === "product" ? "text-on-surface" : "text-on-surface-variant";
-  const navLinkClass = isProduct ? "hidden md:flex gap-stack-lg items-center" : variant === "contact" ? "hidden md:flex space-x-gutter" : "hidden md:flex space-x-6";
+  const navLinkClass = "hidden md:flex items-center gap-stack-lg";
   const searchItems = useMemo(
     () => [
       ...baseSearchItems,
@@ -96,19 +95,14 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
 
   return (
     <>
-      <nav className={`${variant === "home" ? "glass-nav" : "bg-surface/60 backdrop-blur-md border-b border-outline-variant"} docked full-width top-0 sticky z-50 transition-all duration-300`}>
-        <div className="flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
-          {isProduct ? (
-            <div className="flex items-center gap-stack-lg">
-              {brand}
-              <div className={navLinkClass}>{links}</div>
-            </div>
-          ) : (
-            <>
-              {brand}
-              <div className={navLinkClass}>{links}</div>
-            </>
-          )}
+      <nav className="docked full-width top-0 sticky z-50 nav-gpu transition-all duration-300">
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 -z-10 ${variant === "home" ? "glass-nav" : "bg-surface/60 backdrop-blur-md border-b border-outline-variant"}`}
+        />
+        <div className="relative flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
+          {brand}
+          <div className={navLinkClass}>{links}</div>
 
           <div className="flex items-center space-x-4">
             <div className={`${mobileMenu ? "hidden md:flex" : "flex"} space-x-2`}>
@@ -132,14 +126,14 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
         </div>
 
         {mobileMenu && menuOpen ? (
-          <div className="md:hidden border-t border-outline-variant bg-surface/95 backdrop-blur-md px-gutter py-5 space-y-4">
+          <div className="relative md:hidden border-t border-outline-variant bg-surface/95 backdrop-blur-md px-gutter py-5 space-y-4">
             <div className="flex flex-col gap-4">{links}</div>
           </div>
         ) : null}
       </nav>
 
       {searchOpen ? (
-        <div className="fixed inset-0 z-[70] bg-on-surface/50 p-4 md:p-10" onClick={closeSearch}>
+        <div className="fixed inset-0 z-[70] bg-black/65 p-4 md:p-10" onClick={closeSearch}>
           <section aria-label="ค้นหาของสะสม" aria-modal="true" className="max-w-2xl mx-auto bg-surface-container-lowest border border-outline-variant shadow-2xl" onClick={(event) => event.stopPropagation()} role="dialog">
             <div className="flex justify-between items-center p-5 border-b border-outline-variant">
               <h2 className="font-headline-md text-headline-md text-on-surface">ค้นหาของสะสม</h2>

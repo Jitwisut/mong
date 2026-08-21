@@ -58,7 +58,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           </Link>
         </div>
 
-        <section className="w-full max-w-container mx-auto px-gutter pb-stack-xl">
+        <section className="w-full max-w-container mx-auto px-gutter pb-12 md:pb-stack-xl">
           <div className="grid grid-cols-1 gap-gutter lg:grid-cols-12 lg:gap-margin-desktop">
             <ProductGallery images={product.gallery} title={product.name} />
 
@@ -66,7 +66,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <div className="mb-stack-md flex items-center gap-2">
                 <span className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">{product.eyebrow}</span>
                 <span className="h-1 w-1 rounded-full bg-outline" />
-                <span className="inline-flex items-center gap-1 border border-primary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                <span className="inline-flex items-center gap-1 bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-secondary">
                   <Icon name="verified" size={12} /> {product.status}
                 </span>
               </div>
@@ -90,7 +90,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
               <div className="mt-stack-xl flex flex-col gap-stack-sm border-t border-outline-variant pt-stack-md text-on-surface-variant">
                 <div className="flex items-start gap-3">
-                  <Icon name="shield-check" className="mt-0.5 shrink-0 text-primary" />
+                  <Icon name="shield-check" className="mt-0.5 shrink-0 text-tertiary" />
                   <p className="font-body-md text-body-md">{product.provenance}</p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -103,7 +103,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         </section>
 
         {relatedProducts.length > 0 ? (
-          <section className="border-t border-outline-variant bg-surface-container-low px-gutter py-stack-xl">
+          <section className="border-t border-outline-variant bg-surface-container-low px-gutter py-12 md:py-stack-xl">
             <div className="mx-auto w-full max-w-container">
               <div className="mb-stack-lg">
                 <p className="font-label-caps text-label-caps text-primary">เลือกชมต่อ</p>

@@ -19,17 +19,17 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
           />
         </Link>
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 pointer-events-none">
-          <span className="bg-on-surface/80 px-2 py-1 font-label-caps text-[10px] tracking-widest text-on-primary">
+          <span className="bg-secondary/95 px-2 py-1 font-label-caps text-[10px] tracking-widest text-on-secondary">
             {product.status}
           </span>
           <WishlistToggle
             item={product}
             ariaLabel={`เพิ่ม ${product.name} ในรายการโปรด`}
             showLabel={false}
-            className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center border border-on-primary/70 bg-on-surface/70 text-on-primary transition-colors hover:bg-primary hover:text-on-surface"
+            className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center border border-on-surface/30 bg-surface-dim/80 text-on-surface transition-colors hover:bg-primary hover:text-on-primary hover:border-primary"
           />
         </div>
-        <div className="absolute bottom-0 left-0 right-0 translate-y-full bg-on-surface/80 px-4 py-3 text-on-primary transition-transform duration-300 group-hover:translate-y-0">
+        <div className="absolute bottom-0 left-0 right-0 translate-y-full bg-surface-dim/90 px-4 py-3 text-on-surface transition-transform duration-300 group-hover:translate-y-0">
           <span className="inline-flex items-center gap-2 font-label-caps text-label-caps">
             ดูรายละเอียด <Icon name="arrow-right" size={15} />
           </span>
