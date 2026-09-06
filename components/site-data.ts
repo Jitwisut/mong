@@ -24,6 +24,13 @@ export interface GalleryImage {
   caption: string;
 }
 
+export const shopContact = {
+  phone: "088-788-9878",
+  phoneHref: "tel:0887889878",
+  email: "amkorn.n@gmail.com",
+  emailHref: "mailto:amkorn.n@gmail.com",
+};
+
 export const categories: Category[] = [
   {
     id: 1,

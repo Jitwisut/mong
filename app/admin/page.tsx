@@ -4,6 +4,7 @@ import { AdminDashboard } from "../../components/admin-dashboard";
 import { AdminPinGate } from "../../components/admin-pin-gate";
 import { isAdminAuthConfigured, isAdminSessionValid, ADMIN_SESSION_COOKIE } from "../../lib/admin-auth";
 import { getCatalogProducts } from "../../lib/catalog-repository";
+import { getInquiries, getInquiryCounts } from "../../lib/inquiry-repository";
 import { isDatabaseConfigured } from "../../lib/postgres";
 
 export const dynamic = "force-dynamic";
@@ -18,8 +19,20 @@ export default async function AdminPage() {
   const sessionToken = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
 
   if (isAdminSessionValid(sessionToken)) {
-    const products = await getCatalogProducts();
-    return <AdminDashboard databaseConfigured={isDatabaseConfigured()} products={products} />;
+    const [products, inquiries, inquiryCounts] = await Promise.all([
+      getCatalogProducts(),
+      getInquiries(),
+      getInquiryCounts(),
+    ]);
+
+    return (
+      <AdminDashboard
+        databaseConfigured={isDatabaseConfigured()}
+        inquiries={inquiries}
+        inquiryCounts={inquiryCounts}
+        products={products}
+      />
+    );
   }
 
   return <AdminPinGate configured={isAdminAuthConfigured()} />;

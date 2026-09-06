@@ -9,6 +9,13 @@ import { DashboardActions } from "./dashboard-actions";
 import { Icon, type IconName } from "./icons";
 import { MobileDashboardMenu } from "./mobile-dashboard-menu";
 import { UploadArea } from "./upload-area";
+import type { Inquiry, InquiryCounts } from "../lib/inquiry-repository";
+
+const inquiryKindLabels: Record<Inquiry["kind"], string> = {
+  contact: "ติดต่อทั่วไป",
+  purchase: "สอบถามเพื่อสั่งซื้อ",
+  offer: "ขอประเมินราคา",
+};
 
 const sectionLabels = {
   overview: "ภาพรวมผู้ดูแล",
@@ -43,9 +50,11 @@ function isAdminSection(value: string): value is AdminSection {
 interface AdminDashboardProps {
   products: CatalogProduct[];
   databaseConfigured: boolean;
+  inquiries: Inquiry[];
+  inquiryCounts: InquiryCounts;
 }
 
-export function AdminDashboard({ products, databaseConfigured }: AdminDashboardProps) {
+export function AdminDashboard({ products, databaseConfigured, inquiries, inquiryCounts }: AdminDashboardProps) {
   const [activeSection, setActiveSection] = useState<AdminSection>("overview");
   const addItemFormRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
@@ -133,7 +142,7 @@ export function AdminDashboard({ products, databaseConfigured }: AdminDashboardP
             {activeSection === "overview" ? <AdminOverview onSelect={selectSection} products={products} databaseConfigured={databaseConfigured} /> : null}
             {activeSection === "add-item" ? <AdminAddItemPanel formRef={addItemFormRef} onCreated={handleProductCreated} /> : null}
             {activeSection === "inventory" ? <AdminInventory products={products} /> : null}
-            {activeSection === "sales" ? <AdminSales /> : null}
+            {activeSection === "sales" ? <AdminSales counts={inquiryCounts} databaseConfigured={databaseConfigured} inquiries={inquiries} /> : null}
             {activeSection === "settings" ? <AdminSettings /> : null}
           </div>
         </div>
@@ -231,7 +240,9 @@ function AdminAddItemPanel({
     setIsSubmitting(true);
     setFeedback(null);
 
-    const formData = new FormData(event.currentTarget);
+    // React ตั้ง event.currentTarget เป็น null หลัง handler จบ จึงต้องเก็บฟอร์มไว้ก่อน await
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const categoryMap: Record<string, ProductCategory> = {
       พระเครื่อง: "amulets",
       เหรียญ: "coins",
@@ -271,7 +282,7 @@ function AdminAddItemPanel({
       }
 
       setFeedback({ tone: "success", message: "เพิ่มสินค้าเข้าสู่ PostgreSQL แล้ว" });
-      event.currentTarget.reset();
+      form.reset();
       onCreated();
     } catch {
       setFeedback({ tone: "error", message: "เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาลองใหม่" });
@@ -389,23 +400,71 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
   );
 }
 
-function AdminSales() {
+function AdminSales({
+  counts,
+  inquiries,
+  databaseConfigured,
+}: {
+  counts: InquiryCounts;
+  inquiries: Inquiry[];
+  databaseConfigured: boolean;
+}) {
   return (
     <section className="space-y-stack-lg" id="sales">
       <div>
         <p className="font-label-caps text-label-caps tracking-widest text-primary">SALES WORKSPACE</p>
         <h2 className="mt-2 font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">การขายและการติดต่อ</h2>
-        <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">รวมทางลัดสำหรับติดตามคำถามและนัดหมายจากลูกค้า ข้อมูลชุดนี้จะเชื่อมกับระบบจริงเมื่อเพิ่มฐานข้อมูล</p>
+        <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">ข้อความที่ลูกค้าส่งผ่านหน้าติดต่อและปุ่มสอบถามสินค้าจะมาแสดงที่นี่</p>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <AdminStat icon="mail" label="สอบถามใหม่" value={3} detail="รอตอบกลับ" />
-        <AdminStat icon="shield-check" label="รอตรวจสอบ" value={2} detail="รายการสินค้า" />
-        <AdminStat icon="map-pin" label="นัดหมาย" value={1} detail="รอยืนยันเวลา" />
+        <AdminStat icon="mail" label="สอบถามใหม่" value={counts.new} detail="รอตอบกลับ" />
+        <AdminStat icon="receipt" label="ข้อความทั้งหมด" value={counts.total} detail="ตั้งแต่เริ่มใช้งาน" />
+        <AdminStat icon="map-pin" label="นัดหมายเข้าชม" value={counts.appointments} detail="รอยืนยันเวลา" />
       </div>
-      <div className="border border-outline-variant bg-surface-container-lowest p-stack-lg">
-        <h3 className="font-headline-md text-headline-md text-on-surface">จัดการการติดต่อ</h3>
-        <p className="mt-2 font-body-md leading-7 text-on-surface-variant">ตอนนี้ทีมงานสามารถเปิดหน้าติดต่อเพื่ออ่านช่องทางโทรศัพท์ อีเมล และนัดหมายหน้าร้านได้โดยตรง</p>
-        <Link className="mt-5 inline-flex items-center gap-2 border border-primary px-5 py-3 font-label-caps text-label-caps text-primary transition-colors hover:bg-primary hover:text-on-primary" href="/contact">เปิดหน้าติดต่อ <Icon name="arrow-right" size={16} /></Link>
+
+      {!databaseConfigured ? (
+        <p className="border-l-2 border-error px-4 py-3 font-body-md text-sm leading-6 text-on-surface-variant" role="alert">
+          ยังไม่ได้ตั้งค่า <code>DATABASE_URL</code> ระบบจึงยังรับข้อความจากลูกค้าไม่ได้ — หน้าเว็บจะแจ้งลูกค้าให้ติดต่อร้านโดยตรงแทน
+        </p>
+      ) : null}
+
+      <div className="overflow-x-auto border border-outline-variant bg-surface-container-lowest">
+        <table className="min-w-full text-left">
+          <thead className="border-b border-outline-variant bg-surface-container-low">
+            <tr className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">
+              <th className="px-5 py-4">ผู้ติดต่อ</th>
+              <th className="px-5 py-4">ประเภท</th>
+              <th className="px-5 py-4">รายการที่สนใจ</th>
+              <th className="whitespace-nowrap px-5 py-4 text-right">เมื่อ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {inquiries.length === 0 ? (
+              <tr>
+                <td className="px-5 py-8 text-center font-body-md text-on-surface-variant" colSpan={4}>ยังไม่มีข้อความจากลูกค้า</td>
+              </tr>
+            ) : inquiries.map((inquiry) => (
+              <tr className="border-b border-outline-variant/70 last:border-0" key={inquiry.id}>
+                <td className="px-5 py-4">
+                  <p className="font-body-md font-semibold text-on-surface">{inquiry.name}</p>
+                  <p className="mt-1 text-sm text-on-surface-variant">
+                    {[inquiry.phone, inquiry.email].filter(Boolean).join(" · ") || "ไม่ได้ระบุช่องทางติดต่อ"}
+                  </p>
+                  {inquiry.message ? <p className="mt-2 max-w-md text-sm text-on-surface-variant">{inquiry.message}</p> : null}
+                </td>
+                <td className="whitespace-nowrap px-5 py-4 font-body-md text-sm text-on-surface-variant">{inquiryKindLabels[inquiry.kind]}</td>
+                <td className="px-5 py-4 font-body-md text-sm text-on-surface-variant">
+                  {inquiry.productSlug
+                    ? <Link className="text-primary hover:underline" href={`/products/${inquiry.productSlug}`}>{inquiry.productName}</Link>
+                    : inquiry.productName || "—"}
+                </td>
+                <td className="whitespace-nowrap px-5 py-4 text-right font-body-md text-sm text-on-surface-variant">
+                  {new Date(inquiry.createdAt).toLocaleString("th-TH", { dateStyle: "short", timeStyle: "short" })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );
