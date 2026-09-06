@@ -70,7 +70,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   <Icon name="verified" size={12} /> {product.status}
                 </span>
               </div>
-              <h1 className="font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">{product.name}</h1>
+              {/* ที่ช่วง lg คอลัมน์นี้แคบ (col-span-5) จึงยังไม่ขยับขึ้น 64px รอจนถึง xl ที่คอลัมน์กว้างพอ */}
+              <h1 className="font-display-lg text-display-lg-mobile text-on-surface xl:text-display-lg">{product.name}</h1>
               <p className="mt-stack-sm font-body-lg text-body-lg text-on-surface-variant">{product.shortDescription}</p>
 
               <div className="my-stack-xl">

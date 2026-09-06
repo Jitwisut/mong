@@ -47,7 +47,7 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
             <p className="font-label-caps text-[10px] tracking-widest text-on-surface-variant">ราคา</p>
             <p className="mt-1 font-body-md font-semibold text-primary">{product.price}</p>
           </div>
-          <Link className="inline-flex items-center gap-1 font-label-caps text-[10px] tracking-widest text-on-surface-variant transition-colors hover:text-primary" href={`/products/${product.slug}`}>
+          <Link className="-my-2 inline-flex min-h-11 items-center gap-1 py-2 font-label-caps text-[10px] tracking-widest text-on-surface-variant transition-colors hover:text-primary" href={`/products/${product.slug}`}>
             เปิดรายการ <Icon name="chevron-right" size={15} />
           </Link>
         </div>

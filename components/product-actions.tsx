@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { Icon } from "./icons";
 import { shopContact } from "./site-data";
+import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistToggle } from "./wishlist";
 
 interface ProductActionsProps {
@@ -23,11 +24,13 @@ export function ProductActions({ product }: ProductActionsProps) {
   const [error, setError] = useState("");
   const [isSending, setIsSending] = useState(false);
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setDialogMode(null);
     setSubmitted(false);
     setError("");
-  };
+  }, []);
+
+  useModalDismiss(dialogMode !== null, closeDialog);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

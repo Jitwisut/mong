@@ -58,7 +58,7 @@ export function SiteFooter({ variant }: SiteFooterProps) {
         </div>
         <div className="md:col-span-3 flex flex-col md:flex-row justify-end space-y-4 md:space-y-0 md:space-x-8">
           {footerLinks.map((link) => (
-            <Link key={link.label} className="font-label-caps text-label-caps text-on-surface-variant/70 hover:text-primary-fixed transition-colors duration-200" href={link.href}>
+            <Link key={link.label} className="inline-flex min-h-11 items-center font-label-caps text-label-caps text-on-surface-variant/70 hover:text-primary-fixed transition-colors duration-200" href={link.href}>
               {link.label}
             </Link>
           ))}
@@ -74,7 +74,7 @@ function FooterColumn({ title, links }: { title: string; links: Array<{ label: s
     <div className="flex flex-col gap-stack-sm">
       <h4 className="font-label-caps text-label-caps text-primary-fixed-dim font-bold mb-2">{title}</h4>
       {links.map((link) => (
-        <Link key={link.label} className="font-body-md text-body-md text-on-surface-variant/70 hover:text-primary-fixed transition-colors duration-200 outline-none focus:underline focus:underline-offset-4" href={link.href}>
+        <Link key={link.label} className="-my-1 inline-flex min-h-11 items-center py-1 font-body-md text-body-md text-on-surface-variant/70 hover:text-primary-fixed transition-colors duration-200 outline-none focus:underline focus:underline-offset-4" href={link.href}>
           {link.label}
         </Link>
       ))}

@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import { catalogProducts, categoryLabels, type CatalogProduct } from "./catalog-data";
 import { Icon } from "./icons";
+import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistPanel, useWishlist } from "./wishlist";
 
-export type ActiveNav = "home" | "amulets" | "coins" | "collectibles" | null;
+export type ActiveNav = "home" | "amulets" | "coins" | "collectibles" | "contact" | null;
 export type PublicNavVariant = "home" | "product" | "contact";
 
 interface PublicNavProps {
@@ -21,8 +22,7 @@ const navItems = [
   { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
   { label: "เหรียญ", href: "/watches/rolex-submariner?category=coins", key: "coins" },
   { label: "ของสะสม", href: "/watches/rolex-submariner?category=collectibles", key: "collectibles" },
-  { label: "บริการ", href: "/contact", key: "services" },
-  { label: "ติดต่อเรา", href: "/contact", key: "contact" },
+  { label: "บริการและติดต่อ", href: "/contact", key: "contact" },
 ] as const;
 
 const baseSearchItems = [
@@ -59,36 +59,44 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
   const visibleSearchItems = filteredSearchItems.slice(0, 8);
 
   const closeMobileMenu = () => setMenuOpen(false);
-  const closeSearch = () => {
+  const closeSearch = useCallback(() => {
     setSearchOpen(false);
     setQuery("");
-  };
+  }, []);
+  const closeWishlist = useCallback(() => setWishlistOpen(false), []);
+
+  useModalDismiss(searchOpen, closeSearch);
+  useModalDismiss(wishlistOpen, closeWishlist);
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
-  const links = navItems.map((item) => {
-    const isActive = active === item.key;
+  const renderLinks = (placement: "desktop" | "mobile") =>
+    navItems.map((item) => {
+      const isActive = active === item.key;
+      // บนมือถือให้เป็นบล็อกสูงพอกดได้สะดวก ส่วนเดสก์ท็อปคงเส้นใต้แบบเดิมไว้
+      const placementClass = placement === "mobile"
+        ? `flex min-h-11 items-center ${isActive ? "text-primary" : "text-on-surface-variant"}`
+        : isActive
+          ? "text-primary border-b border-primary pb-1"
+          : "text-on-surface-variant hover:text-primary nav-link";
 
-    return (
-      <Link
-        key={item.key}
-        className={`font-label-caps text-label-caps transition-colors ${
-          isActive
-            ? "text-primary border-b border-primary pb-1"
-            : "text-on-surface-variant hover:text-primary nav-link"
-        }`}
-        href={item.href}
-        onClick={closeMobileMenu}
-      >
-        {item.label}
-      </Link>
-    );
-  });
+      return (
+        <Link
+          key={item.key}
+          aria-current={isActive ? "page" : undefined}
+          className={`font-label-caps text-label-caps transition-colors ${placementClass}`}
+          href={item.href}
+          onClick={closeMobileMenu}
+        >
+          {item.label}
+        </Link>
+      );
+    });
 
   const brand = (
-    <Link href="/" className="font-display-lg text-headline-md text-primary tracking-tight" onClick={closeMobileMenu}>
+    <Link href="/" className="font-display-lg text-lg text-primary tracking-tight sm:text-headline-md" onClick={closeMobileMenu}>
       KORN &amp; COINS
     </Link>
   );
@@ -102,23 +110,25 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
         />
         <div className="relative flex justify-between items-center px-gutter py-4 w-full max-w-container mx-auto">
           {brand}
-          <div className={navLinkClass}>{links}</div>
+          <div className={navLinkClass}>{renderLinks("desktop")}</div>
 
-          <div className="flex items-center space-x-4">
-            <div className={`${mobileMenu ? "hidden md:flex" : "flex"} space-x-2`}>
-              <button aria-label="ค้นหา" className={`hover:opacity-80 transition-all duration-300 active:scale-95 ${actionTextClass}`} onClick={() => setSearchOpen(true)} type="button">
-                <Icon name="search" />
-              </button>
-              <button aria-label="รายการโปรด" aria-expanded={wishlistOpen} className={`relative hover:opacity-80 transition-all duration-300 active:scale-95 ${actionTextClass}`} onClick={() => setWishlistOpen((open) => !open)} type="button">
-                <Icon name="heart" />
-                {items.length > 0 ? <span className="absolute mt-[-4px] ml-[-7px] bg-primary text-on-primary rounded-full text-[9px] leading-4 min-w-4 h-4">{items.length}</span> : null}
-              </button>
-              <Link aria-label="ติดต่อเรา" className={`hover:opacity-80 transition-all duration-300 active:scale-95 ${actionTextClass}`} href="/contact">
-                <Icon name="user" />
-              </Link>
-            </div>
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* ค้นหาและรายการโปรดต้องเข้าถึงได้บนมือถือด้วย ก่อนหน้านี้ถูกซ่อนไว้หลัง md:
+                ทำให้ผู้ใช้มือถือกดหัวใจเก็บของได้แต่เปิดดูไม่ได้เลย */}
+            <button aria-label="ค้นหา" className={`flex h-10 w-10 items-center justify-center transition-all duration-300 hover:opacity-80 active:scale-95 md:h-11 md:w-11 ${actionTextClass}`} onClick={() => setSearchOpen(true)} type="button">
+              <Icon name="search" />
+            </button>
+            <button aria-label={`รายการโปรด${items.length > 0 ? ` (${items.length} รายการ)` : ""}`} aria-expanded={wishlistOpen} className={`relative flex h-10 w-10 items-center justify-center transition-all duration-300 hover:opacity-80 active:scale-95 md:h-11 md:w-11 ${actionTextClass}`} onClick={() => setWishlistOpen((open) => !open)} type="button">
+              <Icon name="heart" />
+              {items.length > 0 ? (
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[9px] leading-none text-on-primary">{items.length}</span>
+              ) : null}
+            </button>
+            <Link aria-label="ติดต่อเรา" className={`hidden h-11 w-11 items-center justify-center transition-all duration-300 hover:opacity-80 active:scale-95 md:flex ${actionTextClass}`} href="/contact">
+              <Icon name="user" />
+            </Link>
             {mobileMenu ? (
-              <button aria-expanded={menuOpen} aria-label={menuOpen ? "ปิดเมนู" : "เปิดเมนู"} className="md:hidden text-primary" onClick={() => setMenuOpen((open) => !open)} type="button">
+              <button aria-expanded={menuOpen} aria-label={menuOpen ? "ปิดเมนู" : "เปิดเมนู"} className="flex h-10 w-10 items-center justify-center text-primary md:hidden" onClick={() => setMenuOpen((open) => !open)} type="button">
                 <Icon name={menuOpen ? "close" : "menu"} />
               </button>
             ) : null}
@@ -127,7 +137,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
 
         {mobileMenu && menuOpen ? (
           <div className="relative md:hidden border-t border-outline-variant bg-surface/95 backdrop-blur-md px-gutter py-5 space-y-4">
-            <div className="flex flex-col gap-4">{links}</div>
+            <div className="flex flex-col divide-y divide-outline-variant/40">{renderLinks("mobile")}</div>
           </div>
         ) : null}
       </nav>
@@ -137,7 +147,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
           <section aria-label="ค้นหาของสะสม" aria-modal="true" className="max-w-2xl mx-auto bg-surface-container-lowest border border-outline-variant shadow-2xl" onClick={(event) => event.stopPropagation()} role="dialog">
             <div className="flex justify-between items-center p-5 border-b border-outline-variant">
               <h2 className="font-headline-md text-headline-md text-on-surface">ค้นหาของสะสม</h2>
-              <button aria-label="ปิดหน้าค้นหา" className="text-on-surface-variant hover:text-primary" onClick={closeSearch} type="button">
+              <button aria-label="ปิดหน้าค้นหา" className="-mr-2 flex h-11 w-11 items-center justify-center text-on-surface-variant hover:text-primary" onClick={closeSearch} type="button">
                 <Icon name="close" />
               </button>
             </div>
@@ -149,7 +159,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
             </form>
             <div className="px-5 pb-5 space-y-2">
               {visibleSearchItems.length > 0 ? visibleSearchItems.map((item) => (
-                <Link key={item.label} className="flex items-center justify-between gap-4 border border-outline-variant p-4 hover:bg-surface-container-low transition-colors" href={item.href} onClick={closeSearch}>
+                <Link key={`${item.href}-${item.label}`} className="flex items-center justify-between gap-4 border border-outline-variant p-4 hover:bg-surface-container-low transition-colors" href={item.href} onClick={closeSearch}>
                   <span>
                     <span className="block font-body-md font-semibold text-on-surface">{item.label}</span>
                     <span className="block font-body-md text-sm text-on-surface-variant mt-1">{item.description}</span>
