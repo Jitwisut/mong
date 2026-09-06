@@ -11,6 +11,10 @@ export interface ProductImage {
   id: number;
   src: string;
   alt: string;
+  /** ระบุ "video" เมื่อ src เป็นไฟล์วิดีโอ (ค่าเริ่มต้นคือรูปภาพ) */
+  kind?: "image" | "video";
+  /** รูปปกสำหรับรายการวิดีโอ ใช้แสดงเป็นภาพนิ่งก่อนกดเล่น */
+  poster?: string;
 }
 
 export interface GalleryImage {
