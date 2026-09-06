@@ -253,6 +253,15 @@ function AdminAddItemPanel({
     const categoryLabel = String(formData.get("category") ?? "");
     const name = String(formData.get("title") ?? "").trim();
     const description = String(formData.get("description") ?? "").trim();
+    const category = categoryMap[categoryLabel] ?? categoryLabel;
+    // ก่อนหน้านี้สองช่องนี้ถูกกรอกแล้วทิ้งไปเงียบๆ เพราะไม่เคยถูกส่งไปกับคำขอ
+    const subcategory = String(formData.get("subcategory") ?? "").trim();
+    const listingType = String(formData.get("listing_type") ?? "").trim();
+    const rawPrice = String(formData.get("price") ?? "").trim();
+    const priceNumber = Number(rawPrice);
+    const price = rawPrice && Number.isFinite(priceNumber) && priceNumber > 0
+      ? `฿${new Intl.NumberFormat("th-TH").format(priceNumber)}`
+      : "สอบถามราคา";
 
     try {
       const response = await fetch("/api/admin/products", {
@@ -260,15 +269,17 @@ function AdminAddItemPanel({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           slug: String(formData.get("slug") ?? "").trim(),
-          category: categoryMap[categoryLabel] ?? categoryLabel,
+          category,
           name,
+          eyebrow: [categoryLabel, subcategory].filter(Boolean).join(" · "),
           shortDescription: String(formData.get("shortDescription") ?? "").trim(),
           description,
           image: String(formData.get("image") ?? "").trim(),
           year: String(formData.get("year") ?? "").trim(),
           material: String(formData.get("material") ?? "").trim(),
           condition: String(formData.get("condition") ?? "").trim(),
-          price: String(formData.get("price") ?? "").trim(),
+          status: listingType === "auction" ? "เปิดประมูล" : "ราคาคงที่",
+          price,
         }),
       });
       const result: unknown = await response.json().catch(() => null);

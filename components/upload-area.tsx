@@ -43,7 +43,8 @@ export function UploadArea({ className = "", icon = "add-circle", label, detail,
 
   return (
     <div className={`${className} border border-dashed border-outline-variant bg-surface-container-low hover:bg-surface-container transition-colors relative flex flex-col items-center justify-center cursor-pointer group/upload overflow-hidden`}>
-      {imageSrc ? <Image priority fill className="object-cover opacity-25 group-hover/upload:opacity-40 transition-opacity" sizes="(min-width: 768px) 30vw, 100vw" src={imageSrc} alt={previewUrl ? "ภาพที่เลือกสำหรับอัปโหลด" : sampleAlt} /> : null}
+      {/* blob: URL อยู่ในเบราว์เซอร์เท่านั้น ตัว optimizer ฝั่งเซิร์ฟเวอร์ดึงไม่ได้ ต้องข้ามการ optimize */}
+      {imageSrc ? <Image priority fill unoptimized={Boolean(previewUrl)} className="object-cover opacity-25 group-hover/upload:opacity-40 transition-opacity" sizes="(min-width: 768px) 30vw, 100vw" src={imageSrc} alt={previewUrl ? "ภาพที่เลือกสำหรับอัปโหลด" : sampleAlt} /> : null}
       <input accept="image/*" aria-label={label} className="absolute inset-0 opacity-0 cursor-pointer z-20" onChange={handleFileChange} type="file" />
       <div className="relative z-10 flex flex-col items-center text-center px-3">
         <Icon name={icon} size={large ? 48 : 24} className={`${large ? "mb-4" : ""} text-outline-variant group-hover/upload:text-primary transition-colors`} />
