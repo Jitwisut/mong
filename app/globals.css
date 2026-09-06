@@ -72,9 +72,10 @@ button {
  * recomputing its sticky offset incorrectly.
  */
 .nav-gpu {
+  /* translateZ(0) พอสำหรับบังคับให้ขึ้น compositing layer แล้ว
+     ส่วน will-change ที่ประกาศค้างไว้ตลอดเวลากินหน่วยความจำเปล่าๆ จึงเอาออก */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  will-change: transform;
 }
 
 .lux-border {

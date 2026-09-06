@@ -545,7 +545,7 @@ function ListingType({ value, title, icon, description, defaultChecked = false }
       <input defaultChecked={defaultChecked} className="peer sr-only" name="listing_type" type="radio" value={value} />
       <div className="flex h-full flex-col gap-4 border border-outline-variant p-6 transition-all peer-checked:border-primary peer-checked:bg-surface-container-low">
         <div className="flex items-center justify-between"><span className="font-body-md text-body-md font-semibold text-on-surface">{title}</span><Icon name={icon} className="text-outline-variant" /></div>
-        <p className="font-body-md text-sm text-body-md text-on-surface-variant">{description}</p>
+        <p className="font-body-md text-sm text-on-surface-variant">{description}</p>
       </div>
     </label>
   );

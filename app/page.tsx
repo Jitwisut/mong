@@ -8,7 +8,9 @@ import { categories, shopGallery } from "../components/site-data";
 import { SiteFooter } from "../components/site-footer";
 import { getCatalogProducts } from "../lib/catalog-repository";
 
-export const dynamic = "force-dynamic";
+// แคช 5 นาที แล้วให้ revalidatePath() ใน /api/admin/products ล้างแคชทันทีที่เพิ่มสินค้าใหม่
+// (เดิมเป็น force-dynamic จึงยิงคิวรีฐานข้อมูลใหม่ทุก request ทั้งที่ข้อมูลแทบไม่เปลี่ยน)
+export const revalidate = 300;
 
 const heroHighlights: Array<{ icon: IconName; label: string }> = [
   { icon: "shield-check", label: "ตรวจสอบองค์จริงโดยทีมงานผู้เชี่ยวชาญ" },

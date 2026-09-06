@@ -14,16 +14,18 @@ const footerLinks = [
 ];
 
 export function SiteFooter({ variant }: SiteFooterProps) {
+  const year = new Date().getFullYear();
+
   if (variant === "product") {
     return (
       <footer className="bg-surface-container-lowest w-full mt-auto border-t border-outline-variant">
-        <div className="w-full py-stack-xl px-gutter grid grid-cols-1 md:grid-cols-4 gap-stack-lg max-w-container mx-auto">
+        <div className="w-full py-stack-xl px-gutter grid grid-cols-1 md:grid-cols-3 gap-stack-lg max-w-container mx-auto">
           <div className="md:col-span-1">
             <Link href="/" className="font-display-lg text-headline-sm text-on-surface mb-stack-md block tracking-tight">
               KORN &amp; COINS
             </Link>
             <p className="font-body-md text-body-md text-on-surface-variant/70 mb-stack-lg">ศูนย์รวมพระเครื่อง เหรียญ และของสะสมสำหรับนักสะสมทุกระดับ</p>
-            <p className="font-body-md text-body-md text-on-surface-variant/70 text-sm">© 2026 KORN &amp; COINS. สงวนลิขสิทธิ์</p>
+            <p className="font-body-md text-sm text-on-surface-variant/70">© {year} KORN &amp; COINS. สงวนลิขสิทธิ์</p>
           </div>
           <FooterColumn title="เมนู" links={footerLinks.slice(0, 2)} />
           <FooterColumn title="บริการ" links={footerLinks.slice(2)} />
@@ -42,7 +44,7 @@ export function SiteFooter({ variant }: SiteFooterProps) {
           </div>
           <FooterColumn title="ข้อมูลร้าน" links={footerLinks.slice(2)} />
           <div className="flex flex-col justify-end md:items-end">
-            <p className="font-body-md text-body-md text-on-surface-variant/50 text-sm">© 2026 KORN &amp; COINS. สงวนลิขสิทธิ์</p>
+            <p className="font-body-md text-sm text-on-surface-variant/50">© {year} KORN &amp; COINS. สงวนลิขสิทธิ์</p>
           </div>
         </div>
       </footer>
@@ -64,7 +66,7 @@ export function SiteFooter({ variant }: SiteFooterProps) {
           ))}
         </div>
       </div>
-      <div className="text-center font-body-md text-body-md text-on-surface-variant/70 pb-4">© 2026 KORN &amp; COINS. สงวนลิขสิทธิ์</div>
+      <div className="text-center font-body-md text-body-md text-on-surface-variant/70 pb-4">© {year} KORN &amp; COINS. สงวนลิขสิทธิ์</div>
     </footer>
   );
 }
