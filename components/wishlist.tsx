@@ -22,24 +22,79 @@ interface WishlistContextValue {
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 const storageKey = "korn-coins-wishlist";
 
+function isWishlistItem(value: unknown): value is WishlistItem {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  const item = value as Record<string, unknown>;
+  return typeof item.id === "string"
+    && typeof item.name === "string"
+    && typeof item.price === "string"
+    && typeof item.image === "string"
+    && (item.slug === undefined || typeof item.slug === "string");
+}
+
+// localStorage ใช้ไม่ได้ในโหมดส่วนตัวหรือเมื่อเบราว์เซอร์บล็อกการเก็บข้อมูล และค่าที่เก็บไว้
+// อาจเสียหายได้ ทุกการอ่าน–เขียนจึงต้องกันพลาดไว้ ไม่เช่นนั้นทั้งเว็บจะพังทั้งหน้า
+function readStoredItems(): WishlistItem[] {
+  let raw: string | null = null;
+
+  try {
+    raw = window.localStorage.getItem(storageKey);
+  } catch {
+    return [];
+  }
+
+  if (!raw) {
+    return [];
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(raw);
+
+    if (!Array.isArray(parsed)) {
+      throw new Error("รูปแบบข้อมูลรายการโปรดไม่ถูกต้อง");
+    }
+
+    return parsed.filter(isWishlistItem);
+  } catch {
+    try {
+      window.localStorage.removeItem(storageKey);
+    } catch {
+      /* ไม่มีอะไรให้ทำต่อถ้าลบไม่ได้ */
+    }
+
+    return [];
+  }
+}
+
+function writeStoredItems(items: WishlistItem[]) {
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(items));
+  } catch {
+    /* เต็มโควตาหรือถูกบล็อก — รายการโปรดยังใช้ได้ในหน้านี้ */
+  }
+}
+
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<WishlistItem[]>([]);
+  // ต้องเป็น state ไม่ใช่ ref: ถ้าใช้ ref ค่าจะเป็น true ตั้งแต่ effect รอบแรก
+  // ทำให้ effect ที่เขียนลง storage เขียนอาเรย์ว่างทับของเดิมก่อนที่ค่าที่โหลดมาจะ render
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const storedItems = window.localStorage.getItem(storageKey);
-
-    if (storedItems) {
-      try {
-        setItems(JSON.parse(storedItems) as WishlistItem[]);
-      } catch {
-        window.localStorage.removeItem(storageKey);
-      }
-    }
+    setItems(readStoredItems());
+    setHydrated(true);
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(items));
-  }, [items]);
+    if (!hydrated) {
+      return;
+    }
+
+    writeStoredItems(items);
+  }, [hydrated, items]);
 
   const value = useMemo<WishlistContextValue>(() => ({
     items,

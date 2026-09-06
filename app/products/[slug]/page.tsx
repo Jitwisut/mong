@@ -10,7 +10,9 @@ import { PublicNav } from "../../../components/public-nav";
 import { SiteFooter } from "../../../components/site-footer";
 import { getCatalogProductBySlug, getCatalogProducts, getRelatedCatalogProducts } from "../../../lib/catalog-repository";
 
-export const dynamic = "force-dynamic";
+// แคช 5 นาที แล้วให้ revalidatePath() ใน /api/admin/products ล้างแคชทันทีที่เพิ่มสินค้าใหม่
+// (เดิมเป็น force-dynamic จึงยิงคิวรีฐานข้อมูลใหม่ทุก request ทั้งที่ข้อมูลแทบไม่เปลี่ยน)
+export const revalidate = 300;
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -70,7 +72,8 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   <Icon name="verified" size={12} /> {product.status}
                 </span>
               </div>
-              <h1 className="font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">{product.name}</h1>
+              {/* ที่ช่วง lg คอลัมน์นี้แคบ (col-span-5) จึงยังไม่ขยับขึ้น 64px รอจนถึง xl ที่คอลัมน์กว้างพอ */}
+              <h1 className="font-display-lg text-display-lg-mobile text-on-surface xl:text-display-lg">{product.name}</h1>
               <p className="mt-stack-sm font-body-lg text-body-lg text-on-surface-variant">{product.shortDescription}</p>
 
               <div className="my-stack-xl">
@@ -127,4 +130,12 @@ function ProductSpec({ label, value }: { label: string; value: string }) {
       <p className="font-body-md text-body-md font-medium text-on-surface">{value}</p>
     </div>
   );
+}
+
+// ให้ Next รู้จัก slug ที่มีอยู่เพื่อ prerender ไว้ล่วงหน้าและใช้แคชได้จริง
+// getCatalogProducts() มี fallback เป็นแคตตาล็อกในโค้ดอยู่แล้วถ้าต่อฐานข้อมูลไม่ได้ตอน build
+// slug ที่เพิ่มทีหลังยังเข้าถึงได้ปกติ เพราะ dynamicParams ค่าเริ่มต้นเป็น true
+export async function generateStaticParams() {
+  const products = await getCatalogProducts();
+  return products.map((product) => ({ slug: product.slug }));
 }

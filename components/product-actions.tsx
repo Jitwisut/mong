@@ -1,7 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { Icon } from "./icons";
+import { shopContact } from "./site-data";
+import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistToggle } from "./wishlist";
 
 interface ProductActionsProps {
@@ -19,15 +21,57 @@ type DialogMode = "purchase" | "offer" | null;
 export function ProductActions({ product }: ProductActionsProps) {
   const [dialogMode, setDialogMode] = useState<DialogMode>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
-  const closeDialog = () => {
+  const closeDialog = useCallback(() => {
     setDialogMode(null);
     setSubmitted(false);
-  };
+    setError("");
+  }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  useModalDismiss(dialogMode !== null, closeDialog);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    // React ตั้ง event.currentTarget เป็น null หลัง handler จบ จึงต้องเก็บฟอร์มไว้ก่อน await
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setError("");
+    setIsSending(true);
+
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: dialogMode,
+          name: String(formData.get("name") ?? "").trim(),
+          email: String(formData.get("email") ?? "").trim(),
+          phone: String(formData.get("phone") ?? "").trim(),
+          message: String(formData.get("message") ?? "").trim(),
+          productId: product.id,
+          productName: product.name,
+          productSlug: product.slug ?? "",
+        }),
+      });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const apiMessage = typeof result === "object" && result !== null && "error" in result && typeof result.error === "string"
+          ? result.error
+          : "ส่งข้อมูลไม่สำเร็จ";
+        setError(apiMessage);
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setError("เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -68,18 +112,33 @@ export function ProductActions({ product }: ProductActionsProps) {
                 </div>
                 <label className="block">
                   <span className="font-label-caps text-label-caps text-on-surface-variant">ชื่อผู้ติดต่อ</span>
-                  <input required className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0" placeholder="เช่น คุณกมล" type="text" />
+                  <input required className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0" name="name" placeholder="เช่น คุณกมล" type="text" />
                 </label>
                 <label className="block">
                   <span className="font-label-caps text-label-caps text-on-surface-variant">เบอร์โทรศัพท์</span>
-                  <input required className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0" placeholder="08x-xxx-xxxx" type="tel" />
+                  <input required className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0" name="phone" placeholder="08x-xxx-xxxx" type="tel" />
+                </label>
+                <label className="block">
+                  <span className="font-label-caps text-label-caps text-on-surface-variant">อีเมล</span>
+                  <input className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0" name="email" placeholder="เช่น hello@example.com" type="email" />
                 </label>
                 <label className="block">
                   <span className="font-label-caps text-label-caps text-on-surface-variant">ข้อความเพิ่มเติม</span>
-                  <textarea className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0 resize-y" placeholder="ระบุรุ่นหรือรายละเอียดที่ต้องการสอบถาม" rows={3} />
+                  <textarea className="input-minimal w-full text-body-md text-on-surface mt-2 focus:ring-0 resize-y" name="message" placeholder="ระบุรุ่นหรือรายละเอียดที่ต้องการสอบถาม" rows={3} />
                 </label>
-                <button className="btn-primary w-full flex items-center justify-center gap-2" type="submit">
-                  ส่งข้อมูลให้ทีมงาน <Icon name="send" size={16} />
+                {error ? (
+                  <div className="border-l-2 border-error pl-4 font-body-md text-sm text-error" role="alert">
+                    <p>{error}</p>
+                    <p className="mt-2 text-on-surface-variant">
+                      ติดต่อร้านโดยตรงได้ที่{" "}
+                      <a className="text-primary underline" href={shopContact.phoneHref}>{shopContact.phone}</a>
+                      {" "}หรือ{" "}
+                      <a className="text-primary underline" href={shopContact.emailHref}>{shopContact.email}</a>
+                    </p>
+                  </div>
+                ) : null}
+                <button className="btn-primary w-full flex items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-60" disabled={isSending} type="submit">
+                  {isSending ? "กำลังส่ง..." : "ส่งข้อมูลให้ทีมงาน"} <Icon name="send" size={16} />
                 </button>
               </form>
             )}

@@ -21,6 +21,7 @@ import {
   Menu,
   Package,
   Phone,
+  PlayCircle,
   ReceiptText,
   Search,
   Send,
@@ -66,6 +67,7 @@ export type IconName =
   | "tag"
   | "gavel"
   | "building"
+  | "play-circle"
   | "shield-check";
 
 const iconMap: Record<IconName, LucideIcon> = {
@@ -100,6 +102,7 @@ const iconMap: Record<IconName, LucideIcon> = {
   tag: Tag,
   gavel: Gavel,
   building: Building2,
+  "play-circle": PlayCircle,
   "shield-check": ShieldCheck,
 };
 

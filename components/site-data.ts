@@ -11,6 +11,10 @@ export interface ProductImage {
   id: number;
   src: string;
   alt: string;
+  /** ระบุ "video" เมื่อ src เป็นไฟล์วิดีโอ (ค่าเริ่มต้นคือรูปภาพ) */
+  kind?: "image" | "video";
+  /** รูปปกสำหรับรายการวิดีโอ ใช้แสดงเป็นภาพนิ่งก่อนกดเล่น */
+  poster?: string;
 }
 
 export interface GalleryImage {
@@ -19,6 +23,13 @@ export interface GalleryImage {
   alt: string;
   caption: string;
 }
+
+export const shopContact = {
+  phone: "088-788-9878",
+  phoneHref: "tel:0887889878",
+  email: "amkorn.n@gmail.com",
+  emailHref: "mailto:amkorn.n@gmail.com",
+};
 
 export const categories: Category[] = [
   {

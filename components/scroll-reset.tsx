@@ -23,20 +23,32 @@ function ScrollResetInner() {
       return;
     }
 
-    let frame = 0;
-    const start = performance.now();
+    // เดิมโค้ดนี้บังคับเลื่อนขึ้นบนใหม่ทุกเฟรมนาน 260ms ซึ่งฝืนผู้ใช้ที่เลื่อนจอทันทีหลังเปลี่ยนหน้า
+    // ตอนนี้เลื่อนครั้งเดียว แล้วยืนยันอีกครั้งในเฟรมถัดไปเผื่อเนื้อหายังโหลดไม่เสร็จ
+    // และยกเลิกทันทีถ้าผู้ใช้เริ่มเลื่อนเอง
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
-    const pinToTop = (time: number) => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-
-      if (time - start < 260) {
-        frame = requestAnimationFrame(pinToTop);
-      }
+    let cancelled = false;
+    const cancel = () => {
+      cancelled = true;
     };
 
-    frame = requestAnimationFrame(pinToTop);
+    window.addEventListener("wheel", cancel, { passive: true, once: true });
+    window.addEventListener("touchstart", cancel, { passive: true, once: true });
+    window.addEventListener("keydown", cancel, { once: true });
 
-    return () => cancelAnimationFrame(frame);
+    const frame = requestAnimationFrame(() => {
+      if (!cancelled) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("wheel", cancel);
+      window.removeEventListener("touchstart", cancel);
+      window.removeEventListener("keydown", cancel);
+    };
   }, [pathname, searchParams]);
 
   return null;

@@ -16,7 +16,7 @@ export default async function ContactPage() {
 
   return (
     <div className="bg-background text-on-background font-body-md min-h-screen flex flex-col">
-      <PublicNav searchProducts={catalogProducts} variant="contact" mobileMenu />
+      <PublicNav active="contact" searchProducts={catalogProducts} variant="contact" mobileMenu />
 
       <main className="flex-grow w-full">
         <section className="text-center px-margin-mobile md:px-margin-desktop pt-12 md:pt-stack-xl pb-stack-lg animate-fade-in opacity-0">
