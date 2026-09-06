@@ -36,28 +36,37 @@ const query = `
     updated_at = NOW()
 `;
 
-try {
-  for (const product of catalogProducts) {
-    await pool.query(query, [
-      product.id,
-      product.slug,
-      product.category,
-      product.name,
-      product.eyebrow,
-      product.shortDescription,
-      product.description,
-      product.price,
-      product.status,
-      product.image,
-      JSON.stringify(product.gallery),
-      product.year,
-      product.material,
-      product.condition,
-      product.provenance,
-    ]);
-  }
+// ห่อด้วยฟังก์ชัน async เพราะ tsx คอมไพล์ไฟล์ .ts เป็น CJS (package.json ไม่ได้ตั้ง type: module)
+// ซึ่งไม่รองรับ top-level await ทำให้สคริปต์นี้พังทุกครั้งที่รัน
+async function main() {
+  try {
+    for (const product of catalogProducts) {
+      await pool.query(query, [
+        product.id,
+        product.slug,
+        product.category,
+        product.name,
+        product.eyebrow,
+        product.shortDescription,
+        product.description,
+        product.price,
+        product.status,
+        product.image,
+        JSON.stringify(product.gallery),
+        product.year,
+        product.material,
+        product.condition,
+        product.provenance,
+      ]);
+    }
 
-  console.log(`PostgreSQL seed complete: ${catalogProducts.length} products upserted.`);
-} finally {
-  await pool.end();
+    console.log(`PostgreSQL seed complete: ${catalogProducts.length} products upserted.`);
+  } finally {
+    await pool.end();
+  }
 }
+
+main().catch((error) => {
+  console.error("PostgreSQL seed failed.", error);
+  process.exit(1);
+});
