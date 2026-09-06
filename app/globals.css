@@ -86,33 +86,6 @@ button {
   border: 1px solid #b4923b;
 }
 
-.nav-link,
-.nav-link-hover {
-  position: relative;
-}
-
-.nav-link::after,
-.nav-link-hover::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: #b4923b;
-  transition: width 0.3s ease;
-}
-
-.nav-link-hover::after {
-  bottom: -2px;
-  background-color: #c9a94e;
-}
-
-.nav-link:hover::after,
-.nav-link-hover:hover::after {
-  width: 100%;
-}
-
 .fade-in-up {
   opacity: 0;
   transform: translateY(20px);

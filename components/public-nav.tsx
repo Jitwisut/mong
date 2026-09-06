@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { FormEvent, useCallback, useMemo, useState } from "react";
 import { catalogProducts, categoryLabels, type CatalogProduct } from "./catalog-data";
 import { Icon } from "./icons";
@@ -73,27 +73,17 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
   };
 
   const renderLinks = (placement: "desktop" | "mobile") =>
-    navItems.map((item) => {
-      const isActive = active === item.key;
-      // บนมือถือให้เป็นบล็อกสูงพอกดได้สะดวก ส่วนเดสก์ท็อปคงเส้นใต้แบบเดิมไว้
-      const placementClass = placement === "mobile"
-        ? `flex min-h-11 items-center ${isActive ? "text-primary" : "text-on-surface-variant"}`
-        : isActive
-          ? "text-primary border-b border-primary pb-1"
-          : "text-on-surface-variant hover:text-primary nav-link";
-
-      return (
-        <Link
-          key={item.key}
-          aria-current={isActive ? "page" : undefined}
-          className={`font-label-caps text-label-caps transition-colors ${placementClass}`}
-          href={item.href}
-          onClick={closeMobileMenu}
-        >
-          {item.label}
-        </Link>
-      );
-    });
+    navItems.map((item) => (
+      <Link
+        key={item.key}
+        aria-current={active === item.key ? "page" : undefined}
+        className={`group font-label-caps text-label-caps transition-opacity active:opacity-60 ${placement === "mobile" ? "flex min-h-11 items-center" : "relative inline-flex items-center"}`}
+        href={item.href}
+        onClick={closeMobileMenu}
+      >
+        <NavLinkLabel isActive={active === item.key} label={item.label} placement={placement} />
+      </Link>
+    ));
 
   const brand = (
     <Link href="/" className="font-display-lg text-lg text-primary tracking-tight sm:text-headline-md" onClick={closeMobileMenu}>
@@ -175,5 +165,63 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
 
       <WishlistPanel open={wishlistOpen} onClose={() => setWishlistOpen(false)} />
     </>
+  );
+}
+
+
+/**
+ * ต้องเป็นคอมโพเนนต์ลูกของ <Link> เพราะ useLinkStatus อ่านสถานะจาก Link ที่ครอบอยู่
+ * ให้ผู้ใช้เห็นทันทีว่า "กดไปแล้ว" ระหว่างที่หน้ากำลังโหลด และเห็นว่าตอนนี้อยู่หน้าไหน
+ */
+function NavLinkLabel({
+  label,
+  isActive,
+  placement,
+}: {
+  label: string;
+  isActive: boolean;
+  placement: "desktop" | "mobile";
+}) {
+  const { pending } = useLinkStatus();
+  const highlighted = isActive || pending;
+
+  if (placement === "mobile") {
+    return (
+      <span
+        className={`flex w-full items-center gap-2 border-l-2 pl-3 transition-colors ${
+          isActive
+            ? "border-primary text-primary"
+            : pending
+              ? "border-primary/60 text-primary"
+              : "border-transparent text-on-surface-variant"
+        }`}
+      >
+        {label}
+        {pending ? <NavSpinner /> : null}
+      </span>
+    );
+  }
+
+  return (
+    <span className={`relative inline-flex items-center gap-2 pb-1 transition-colors ${highlighted ? "text-primary" : "text-on-surface-variant group-hover:text-primary"}`}>
+      {label}
+      {pending ? <NavSpinner /> : null}
+      <span
+        aria-hidden="true"
+        className={`absolute inset-x-0 bottom-0 h-0.5 origin-left bg-primary transition-transform duration-300 ${
+          isActive ? "scale-x-100" : pending ? "scale-x-100 opacity-60" : "scale-x-0 group-hover:scale-x-100"
+        }`}
+      />
+    </span>
+  );
+}
+
+function NavSpinner() {
+  return (
+    <span
+      aria-label="กำลังโหลด"
+      className="inline-block h-3 w-3 shrink-0 animate-spin rounded-full border border-primary border-t-transparent"
+      role="status"
+    />
   );
 }

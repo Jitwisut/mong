@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "../../../components/icons";
+import { CatalogFilter } from "../../../components/catalog-filter";
 import { ProductGrid } from "../../../components/product-grid";
 import { PublicNav } from "../../../components/public-nav";
 import {
@@ -98,17 +99,5 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
       <SiteFooter variant="product" />
     </div>
-  );
-}
-
-function CatalogFilter({ href, label, active }: { href: string; label: string; active: boolean }) {
-  return (
-    <Link
-      aria-current={active ? "page" : undefined}
-      className={`border px-4 py-2 font-label-caps text-label-caps transition-colors ${active ? "border-primary bg-primary text-on-primary" : "border-outline text-on-surface hover:border-primary hover:text-primary"}`}
-      href={href}
-    >
-      {label}
-    </Link>
   );
 }
