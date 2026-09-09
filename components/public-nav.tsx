@@ -157,7 +157,7 @@ export function PublicNav({ active = null, mobileMenu = true, variant = "home", 
                   <Icon name="chevron-right" className="text-primary shrink-0" size={18} />
                 </Link>
               )) : <p className="font-body-md text-on-surface-variant py-4">ไม่พบรายการที่ค้นหา</p>}
-              {filteredSearchItems.length > visibleSearchItems.length ? <p className="pt-2 text-center font-label-caps text-[10px] tracking-widest text-on-surface-variant">แสดง 8 รายการแรก · พิมพ์ชื่อสินค้าเพื่อค้นหาให้เจาะจงขึ้น</p> : null}
+              {filteredSearchItems.length > visibleSearchItems.length ? <p className="pt-2 text-center font-label-caps text-label-caps tracking-widest text-on-surface-variant">แสดง 8 รายการแรก · พิมพ์ชื่อสินค้าเพื่อค้นหาให้เจาะจงขึ้น</p> : null}
             </div>
           </section>
         </div>

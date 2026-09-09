@@ -400,7 +400,7 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
                   <p className="mt-1 max-w-md text-sm text-on-surface-variant">{product.shortDescription}</p>
                 </td>
                 <td className="whitespace-nowrap px-5 py-4 font-body-md text-sm text-on-surface-variant">{categoryLabels[product.category]}</td>
-                <td className="whitespace-nowrap px-5 py-4"><span className="bg-secondary px-2 py-1 font-label-caps text-[10px] tracking-wider text-on-secondary">{product.status}</span></td>
+                <td className="whitespace-nowrap px-5 py-4"><span className="bg-secondary px-2 py-1 font-label-caps text-label-caps tracking-wider text-on-secondary">{product.status}</span></td>
                 <td className="whitespace-nowrap px-5 py-4 text-right font-body-md font-semibold text-primary">{product.price}</td>
               </tr>
             ))}

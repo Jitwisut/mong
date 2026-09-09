@@ -19,7 +19,7 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
           />
         </Link>
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 pointer-events-none">
-          <span className="bg-secondary/95 px-2 py-1 font-label-caps text-[10px] tracking-widest text-on-secondary">
+          <span className="bg-secondary/95 px-2 py-1 font-label-caps text-label-caps tracking-widest text-on-secondary">
             {product.status}
           </span>
           <WishlistToggle
@@ -37,17 +37,17 @@ export function ProductCard({ product, priority = false }: { product: CatalogPro
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="font-label-caps text-[10px] tracking-widest text-primary">{product.eyebrow}</p>
+        <p className="font-label-caps text-label-caps tracking-widest text-primary">{product.eyebrow}</p>
         <Link href={`/products/${product.slug}`} className="mt-2 block">
           <h3 className="font-headline-md text-headline-md text-on-surface transition-colors group-hover:text-primary">{product.name}</h3>
         </Link>
         <p className="mt-2 line-clamp-2 font-body-md text-sm leading-6 text-on-surface-variant">{product.shortDescription}</p>
         <div className="mt-auto flex items-end justify-between gap-3 border-t border-outline-variant pt-4">
           <div>
-            <p className="font-label-caps text-[10px] tracking-widest text-on-surface-variant">ราคา</p>
+            <p className="font-label-caps text-label-caps tracking-widest text-on-surface-variant">ราคา</p>
             <p className="mt-1 font-body-md font-semibold text-primary">{product.price}</p>
           </div>
-          <Link className="-my-2 inline-flex min-h-11 items-center gap-1 py-2 font-label-caps text-[10px] tracking-widest text-on-surface-variant transition-colors hover:text-primary" href={`/products/${product.slug}`}>
+          <Link className="-my-2 inline-flex min-h-11 items-center gap-1 py-2 font-label-caps text-label-caps tracking-widest text-on-surface-variant transition-colors hover:text-primary" href={`/products/${product.slug}`}>
             เปิดรายการ <Icon name="chevron-right" size={15} />
           </Link>
         </div>

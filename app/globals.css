@@ -144,6 +144,9 @@ textarea:focus {
   background: transparent;
   padding-left: 0;
   padding-right: 0;
+  /* เดิมสูงแค่ ~25px กดยากบนมือถือ เพิ่มระยะบน-ล่างให้แตะได้สบายโดยยังคงเส้นใต้แบบเดิม */
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 
 .input-minimal:focus {
