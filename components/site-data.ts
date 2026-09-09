@@ -36,6 +36,9 @@ export const shopContact = {
   mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`,
   // ใช้ embed แบบไม่ต้องมี API key เพื่อไม่ต้องผูกกับบัญชี Google Cloud
   mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=th&z=17&output=embed`,
+  // ลิงก์นำทางตรง บนมือถือจะเปิดแอป Google Maps ซึ่งใช้ดูเส้นทางได้จริง
+  // (แผงเส้นทางในกล่อง embed เล็กๆ ใช้งานไม่ได้บนจอมือถือ)
+  mapDirectionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`,
 };
 
 export interface SocialLink {

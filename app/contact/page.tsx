@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ContactForm } from "../../components/contact-form";
 import { Icon, type IconName } from "../../components/icons";
 import { PublicNav } from "../../components/public-nav";
+import { ShopMap } from "../../components/shop-map";
 import { SiteFooter } from "../../components/site-footer";
 import { shopContact, socialLinks } from "../../components/site-data";
 import { getCatalogProducts } from "../../lib/catalog-repository";
@@ -47,16 +48,7 @@ export default async function ContactPage() {
                     เปิดใน Google Maps <Icon name="external-link" size={14} />
                   </a>
                 </div>
-                <div className="mt-5 overflow-hidden border border-outline-variant">
-                  <iframe
-                    allowFullScreen
-                    className="h-64 w-full"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={shopContact.mapEmbedUrl}
-                    title={`แผนที่ร้าน KORN & COINS ${shopContact.addressPlace}`}
-                  />
-                </div>
+                <ShopMap />
               </section>
 
               <section className="bg-surface-container-high p-stack-lg border border-outline-variant animate-fade-in opacity-0 delay-300 flex-grow flex flex-col justify-between">
