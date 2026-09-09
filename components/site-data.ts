@@ -24,12 +24,33 @@ export interface GalleryImage {
   caption: string;
 }
 
+const mapQuery = "ห้างสรรพสินค้าพันธุ์ทิพย์ งามวงศ์วาน";
+
 export const shopContact = {
-  phone: "088-788-9878",
-  phoneHref: "tel:0887889878",
+  phone: "097-879-8996",
+  phoneHref: "tel:0978798996",
   email: "amkorn.n@gmail.com",
   emailHref: "mailto:amkorn.n@gmail.com",
+  addressFloor: "ชั้น 7",
+  addressPlace: "ห้างสรรพสินค้าพันธุ์ทิพย์ งามวงศ์วาน",
+  mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`,
+  // ใช้ embed แบบไม่ต้องมี API key เพื่อไม่ต้องผูกกับบัญชี Google Cloud
+  mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=th&z=17&output=embed`,
 };
+
+export interface SocialLink {
+  key: string;
+  label: string;
+  handle: string;
+  href: string;
+}
+
+export const socialLinks: SocialLink[] = [
+  { key: "facebook", label: "Facebook", handle: "Kornandcoins", href: "https://www.facebook.com/Kornandcoins" },
+  { key: "instagram", label: "Instagram", handle: "@kornandcoins", href: "https://www.instagram.com/kornandcoins" },
+  { key: "tiktok", label: "TikTok", handle: "@kornandcoins", href: "https://www.tiktok.com/@kornandcoins" },
+  { key: "line", label: "LINE Official", handle: "@kornandcoins", href: "https://line.me/R/ti/p/%40kornandcoins" },
+];
 
 export const categories: Category[] = [
   {
