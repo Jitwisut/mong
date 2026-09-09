@@ -3,13 +3,12 @@ import { ContactForm } from "../../components/contact-form";
 import { Icon, type IconName } from "../../components/icons";
 import { PublicNav } from "../../components/public-nav";
 import { SiteFooter } from "../../components/site-footer";
+import { shopContact, socialLinks } from "../../components/site-data";
 import { getCatalogProducts } from "../../lib/catalog-repository";
 
 export const metadata = {
   title: "ติดต่อ KORN & COINS | พระเครื่องและเหรียญสะสม",
 };
-
-const mapUrl = "https://www.google.com/maps/search/?api=1&query=B+Work+Coworking+%26+Office+Space+Si+Rat";
 
 export default async function ContactPage() {
   const catalogProducts = await getCatalogProducts();
@@ -41,18 +40,22 @@ export default async function ContactPage() {
                 <p className="font-body-md text-body-md text-on-surface-variant mb-stack-md">แนะนำให้นัดหมายล่วงหน้า เพื่อให้ทีมงานเตรียมข้อมูลและดูแลคุณได้เต็มที่</p>
                 <div className="border-l-2 border-primary-container pl-4">
                   <h3 className="font-label-caps text-label-caps text-primary mb-1">KORN &amp; COINS</h3>
-                  <p className="font-body-md text-body-md text-on-background">B Work Coworking &amp; Office Space<br />ย่านศรีรัช–แจ้งวัฒนะ</p>
-                  <a className="font-label-caps text-label-caps text-primary-container hover:text-primary underline mt-2 inline-flex items-center gap-1 transition-colors" href={mapUrl} rel="noreferrer" target="_blank">
-                    เปิดแผนที่ <Icon name="external-link" size={14} />
+                  <p className="font-body-md text-body-md text-on-background">
+                    {shopContact.addressFloor}<br />{shopContact.addressPlace}
+                  </p>
+                  <a className="font-label-caps text-label-caps text-primary-container hover:text-primary underline mt-2 inline-flex min-h-11 items-center gap-1 transition-colors" href={shopContact.mapUrl} rel="noreferrer" target="_blank">
+                    เปิดใน Google Maps <Icon name="external-link" size={14} />
                   </a>
                 </div>
-                <div className="grid grid-cols-2 gap-3 mt-5">
-                  <div className="relative h-36 border border-outline-variant overflow-hidden">
-                    <Image fill className="object-cover" sizes="(min-width: 1024px) 14vw, 45vw" src="/images/map-screenshot.jpg" alt="แผนที่บริเวณ B Work Coworking & Office Space" />
-                  </div>
-                  <div className="relative h-36 border border-outline-variant overflow-hidden">
-                    <Image fill className="object-cover" sizes="(min-width: 1024px) 14vw, 45vw" src="/images/hand-drawn-map.jpg" alt="แผนที่วาดมือแนะนำทางเข้าร้าน" />
-                  </div>
+                <div className="mt-5 overflow-hidden border border-outline-variant">
+                  <iframe
+                    allowFullScreen
+                    className="h-64 w-full"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={shopContact.mapEmbedUrl}
+                    title={`แผนที่ร้าน KORN & COINS ${shopContact.addressPlace}`}
+                  />
                 </div>
               </section>
 
@@ -65,15 +68,28 @@ export default async function ContactPage() {
                     ติดต่อทีมงานผู้เชี่ยวชาญ
                   </h2>
                   <p className="font-body-md text-body-md text-on-surface-variant mb-stack-md">สอบถามเรื่องพระเครื่อง เหรียญ หรือของสะสมได้โดยตรง</p>
-                  <ul className="space-y-4">
-                    <Consultation icon="mail" label="พระเครื่องและวัตถุมงคล" href="mailto:amkorn.n@gmail.com" />
-                    <Consultation icon="phone" label="เหรียญสะสม" href="tel:0887889878" />
-                    <Consultation icon="map-pin" label="นัดหมายเข้าชมร้าน" href={mapUrl} external />
+                  <ul className="space-y-2">
+                    <Channel icon="phone" label="เบอร์โทรศัพท์" value={shopContact.phone} href={shopContact.phoneHref} />
+                    <Channel icon="mail" label="อีเมล" value={shopContact.email} href={shopContact.emailHref} />
+                  </ul>
+
+                  <p className="mt-stack-lg mb-stack-sm font-label-caps text-label-caps text-on-surface-variant">ช่องทางออนไลน์</p>
+                  <ul className="space-y-2">
+                    {socialLinks.map((social) => (
+                      <Channel
+                        external
+                        href={social.href}
+                        icon={social.key as IconName}
+                        key={social.key}
+                        label={social.label}
+                        value={social.handle}
+                      />
+                    ))}
                   </ul>
                 </div>
                 <div className="mt-stack-lg pt-stack-md border-t border-outline-variant text-center">
                   <p className="font-label-caps text-label-caps text-on-surface-variant mb-2">โทรหาเรา</p>
-                  <a className="font-headline-md text-headline-md text-primary tracking-wider hover:text-primary-container transition-colors" href="tel:0887889878">088-788-9878</a>
+                  <a className="font-headline-md text-headline-md text-primary tracking-wider hover:text-primary-container transition-colors" href={shopContact.phoneHref}>{shopContact.phone}</a>
                 </div>
               </section>
             </div>
@@ -87,8 +103,8 @@ export default async function ContactPage() {
               <h2 className="font-headline-lg text-headline-lg text-on-surface max-w-md">แวะมาพูดคุยเรื่องของสะสมกับเรา</h2>
               <p className="font-body-md text-body-md text-on-surface-variant max-w-md">ทีมงานยินดีต้อนรับทุกวัน พร้อมชงชาคุยเรื่องพระเครื่องและของสะสมกับคุณ</p>
               <div className="flex flex-wrap gap-4 pt-stack-sm">
-                <a className="btn-primary" href="tel:0887889878">โทร 088-788-9878</a>
-                <a className="btn-ghost" href="mailto:amkorn.n@gmail.com">amkorn.n@gmail.com</a>
+                <a className="btn-primary" href={shopContact.phoneHref}>โทร {shopContact.phone}</a>
+                <a className="btn-ghost" href={shopContact.emailHref}>{shopContact.email}</a>
               </div>
             </div>
             <div className="order-1 lg:order-2 relative min-h-[280px] lg:min-h-[380px] group overflow-hidden">
@@ -104,18 +120,35 @@ export default async function ContactPage() {
   );
 }
 
-function Consultation({ icon, label, href, external = false }: { icon: IconName; label: string; href: string; external?: boolean }) {
+function Channel({
+  icon,
+  label,
+  value,
+  href,
+  external = false,
+}: {
+  icon: IconName;
+  label: string;
+  value: string;
+  href: string;
+  external?: boolean;
+}) {
   return (
-    <li className="flex justify-between items-center gap-3 border-b border-outline-variant/50 pb-2 last:border-b-0">
-      <span className="flex items-center gap-2 font-body-md text-body-md font-semibold text-on-background">
-        <Icon name={icon} size={16} className="text-on-surface-variant" />
-        {label}
-      </span>
-      {external ? (
-        <a className="font-body-md text-body-md text-primary-container hover:text-primary transition-colors inline-flex items-center gap-1" href={href} rel="noreferrer" target="_blank">แผนที่ <Icon name="external-link" size={14} /></a>
-      ) : (
-        <a className="font-body-md text-body-md text-primary-container hover:text-primary transition-colors" href={href}>{href.startsWith("tel:") ? "โทรหาเรา" : "ส่งอีเมล"}</a>
-      )}
+    <li className="border-b border-outline-variant/50 last:border-b-0">
+      <a
+        className="flex min-h-11 items-center justify-between gap-3 py-2 transition-colors hover:text-primary"
+        href={href}
+        {...(external ? { rel: "noreferrer", target: "_blank" } : {})}
+      >
+        <span className="flex items-center gap-2 font-body-md text-body-md font-semibold text-on-background">
+          <Icon name={icon} size={16} className="text-on-surface-variant" />
+          {label}
+        </span>
+        <span className="inline-flex items-center gap-1 font-body-md text-body-md text-primary-container">
+          {value}
+          {external ? <Icon name="external-link" size={14} /> : null}
+        </span>
+      </a>
     </li>
   );
 }

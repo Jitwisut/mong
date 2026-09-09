@@ -493,7 +493,7 @@ function AdminSettings() {
       </div>
       <form className="max-w-2xl space-y-stack-lg border border-outline-variant bg-surface-container-lowest p-stack-lg" onSubmit={(event) => { event.preventDefault(); setSaved(true); }}>
         <TextField id="store-name" label="ชื่อร้าน" placeholder="KORN & COINS" />
-        <TextField id="store-phone" label="เบอร์โทรศัพท์" placeholder="088-788-9878" />
+        <TextField id="store-phone" label="เบอร์โทรศัพท์" placeholder="097-879-8996" />
         <TextField id="store-email" label="อีเมล" placeholder="amkorn.n@gmail.com" />
         <div className="flex flex-wrap items-center gap-4">
           <button className="bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-colors hover:bg-primary-container hover:text-on-primary-container" type="submit">บันทึกการตั้งค่า</button>
