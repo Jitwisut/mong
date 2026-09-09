@@ -68,7 +68,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <div className="mb-stack-md flex items-center gap-2">
                 <span className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">{product.eyebrow}</span>
                 <span className="h-1 w-1 rounded-full bg-outline" />
-                <span className="inline-flex items-center gap-1 bg-secondary px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-on-secondary">
+                <span className="inline-flex items-center gap-1 bg-secondary px-2 py-0.5 text-label-caps font-bold uppercase tracking-wider text-on-secondary">
                   <Icon name="verified" size={12} /> {product.status}
                 </span>
               </div>

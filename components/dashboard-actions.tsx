@@ -53,7 +53,7 @@ export function DashboardActions({ title = "ลงรายการใหม่
         <p className={`mt-1 font-body-md text-body-md ${status ? "text-primary" : "text-on-surface-variant"}`} role="status">{status ?? description}</p>
       </div>
       <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
-        <button className="order-last inline-flex min-h-11 items-center px-3 py-2 font-label-caps text-[10px] tracking-widest text-on-surface-variant transition-colors hover:text-primary sm:order-none" onClick={logout} type="button">ออกจากระบบ</button>
+        <button className="order-last inline-flex min-h-11 items-center px-3 py-2 font-label-caps text-label-caps tracking-widest text-on-surface-variant transition-colors hover:text-primary sm:order-none" onClick={logout} type="button">ออกจากระบบ</button>
         {showListingActions ? (
           <>
             <button className="flex-1 whitespace-nowrap px-6 py-3 border border-outline text-on-surface font-label-caps text-label-caps hover:bg-surface-container transition-colors sm:flex-none" onClick={saveDraft} type="button">บันทึกร่าง</button>
