@@ -163,6 +163,7 @@ function AdminOverview({
   const amuletCount = products.filter((product) => product.category === "amulets").length;
   const coinCount = products.filter((product) => product.category === "coins").length;
   const collectibleCount = products.filter((product) => product.category === "collectibles").length;
+  const jewelryCount = products.filter((product) => product.category === "jewelry").length;
 
   return (
     <section className="space-y-stack-lg" id="overview">
@@ -172,11 +173,12 @@ function AdminOverview({
         <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">เลือกเมนูด้านซ้ายเพื่อจัดการรายการสินค้า ดูข้อมูลการขาย หรือแก้ไขข้อมูลร้านค้าได้ทันที</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <AdminStat icon="inventory" label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
         <AdminStat icon="landmark" label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
         <AdminStat icon="tag" label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
         <AdminStat icon="images" label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="images" label="เครื่องประดับ" value={jewelryCount} detail="รายการพร้อมชม" />
       </div>
 
       <div className="grid grid-cols-1 gap-gutter lg:grid-cols-2">
@@ -249,6 +251,7 @@ function AdminAddItemPanel({
       ธนบัตร: "collectibles",
       วัตถุมงคล: "collectibles",
       "ของสะสมอื่นๆ": "collectibles",
+      เครื่องประดับ: "jewelry",
     };
     const categoryLabel = String(formData.get("category") ?? "");
     const name = String(formData.get("title") ?? "").trim();
@@ -312,7 +315,7 @@ function AdminAddItemPanel({
       <form ref={formRef} className="space-y-stack-xl" onSubmit={submitProduct}>
         <FormSection icon="category" title="01. การจัดหมวดหมู่">
           <div className="grid grid-cols-1 gap-gutter pt-stack-sm md:grid-cols-2">
-            <SelectField id="category" label="หมวดหมู่หลัก" placeholder="เลือกหมวดหมู่..." options={["พระเครื่อง", "เหรียญ", "ธนบัตร", "วัตถุมงคล", "ของสะสมอื่นๆ"]} required />
+            <SelectField id="category" label="หมวดหมู่หลัก" placeholder="เลือกหมวดหมู่..." options={["พระเครื่อง", "เหรียญ", "ธนบัตร", "วัตถุมงคล", "ของสะสมอื่นๆ", "เครื่องประดับ"]} required />
             <SelectField id="subcategory" label="หมวดหมู่ย่อย" placeholder="เลือกหมวดหมู่ย่อย..." options={["เหรียญทอง", "เหรียญที่ระลึก", "พระเนื้อผง", "พระเนื้อโลหะ"]} />
           </div>
         </FormSection>

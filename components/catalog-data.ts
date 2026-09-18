@@ -1,6 +1,6 @@
 import type { ProductImage } from "./site-data";
 
-export type ProductCategory = "amulets" | "coins" | "collectibles";
+export type ProductCategory = "amulets" | "coins" | "collectibles" | "jewelry";
 
 export interface CatalogProduct {
   id: string;
@@ -24,12 +24,14 @@ export const categoryLabels: Record<ProductCategory, string> = {
   amulets: "พระเครื่อง",
   coins: "เหรียญ",
   collectibles: "ของสะสม",
+  jewelry: "เครื่องประดับ",
 };
 
 export const categoryDescriptions: Record<ProductCategory, string> = {
   amulets: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร พร้อมภาพประกอบสำหรับสอบถามและตรวจสอบองค์จริง",
   coins: "เหรียญไทย เหรียญกษาปณ์ และเหรียญที่ระลึกจากหลายยุคสมัย",
   collectibles: "ของเก่า ของหายาก และของสะสมที่มีเรื่องราวจากหลายยุคสมัย",
+  jewelry: "เครื่องประดับทอง เพชร และอัญมณีคัดสรรสำหรับสวมใส่และสะสม",
 };
 
 const galleryImage = (id: number, src: string, alt: string): ProductImage => ({ id, src, alt });
@@ -438,7 +440,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-diamond-gemstone-jewelry",
     slug: "diamond-gemstone-jewelry-selection",
-    category: "collectibles",
+    category: "jewelry",
     name: "เครื่องประดับเพชรและอัญมณีคัดสรร",
     eyebrow: "เครื่องประดับ · มีคลิปวิดีโอ",
     shortDescription: "ถาดแหวนและจี้เพชรพร้อมพลอยสีหลากหลาย ทั้งไพลิน ทับทิม โอปอล หยก และไข่มุก มีคลิปวิดีโอรวมให้ชม",
@@ -457,7 +459,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-antique-gold-diamond-set",
     slug: "antique-gold-diamond-jewelry-set",
-    category: "collectibles",
+    category: "jewelry",
     name: "ชุดเครื่องประดับทองโบราณฝังเพชรซีก",
     eyebrow: "เครื่องประดับโบราณ · มีคลิปวิดีโอ",
     shortDescription: "ชุดทองโบราณฝังเพชรซีก ประกอบด้วยสร้อยคอ แหวน และกำไล งานฝังมือลายละเอียด มีคลิปวิดีโอแยกแต่ละชิ้น",
@@ -575,7 +577,7 @@ export const catalogProducts: CatalogProduct[] = [
 export const featuredProducts = catalogProducts.slice(0, 6);
 
 export function isProductCategory(value: string | undefined): value is ProductCategory {
-  return value === "amulets" || value === "coins" || value === "collectibles";
+  return value === "amulets" || value === "coins" || value === "collectibles" || value === "jewelry";
 }
 
 export function getProductBySlug(slug: string) {

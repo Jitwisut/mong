@@ -7,7 +7,7 @@ import { Icon } from "./icons";
 import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistPanel, useWishlist } from "./wishlist";
 
-export type ActiveNav = "home" | "amulets" | "coins" | "collectibles" | "contact" | null;
+export type ActiveNav = "home" | "amulets" | "coins" | "collectibles" | "jewelry" | "services" | null;
 export type PublicNavVariant = "home" | "product" | "contact";
 
 interface PublicNavProps {
@@ -19,10 +19,11 @@ interface PublicNavProps {
 
 const navItems = [
   { label: "หน้าแรก", href: "/", key: "home" },
-  { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
-  { label: "เหรียญ", href: "/watches/rolex-submariner?category=coins", key: "coins" },
-  { label: "ของสะสม", href: "/watches/rolex-submariner?category=collectibles", key: "collectibles" },
-  { label: "บริการและติดต่อ", href: "/contact", key: "contact" },
+  { label: "ทองคำ", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
+  { label: "เหรียญ,ธนบัตร", href: "/watches/rolex-submariner?category=coins", key: "coins" },
+  { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=collectibles", key: "collectibles" },
+  { label: "บริการ", href: "/contact", key: "services" },
+  { label: "เครื่องประดับ", href: "/watches/rolex-submariner?category=jewelry", key: "jewelry" },
 ] as const;
 
 const baseSearchItems = [

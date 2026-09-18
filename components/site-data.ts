@@ -29,13 +29,16 @@ const mapQuery = "ห้างสรรพสินค้าพันธุ์�
 export const shopContact = {
   phone: "097-879-8996",
   phoneHref: "tel:0978798996",
-  email: "amkorn.n@gmail.com",
-  emailHref: "mailto:amkorn.n@gmail.com",
+  email: "kornandcoins@gmail.com",
+  emailHref: "mailto:kornandcoins@gmail.com",
   addressFloor: "ชั้น 7",
   addressPlace: "ห้างสรรพสินค้าพันธุ์ทิพย์ งามวงศ์วาน",
   mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`,
   // ใช้ embed แบบไม่ต้องมี API key เพื่อไม่ต้องผูกกับบัญชี Google Cloud
   mapEmbedUrl: `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&hl=th&z=17&output=embed`,
+  // ลิงก์นำทางตรง บนมือถือจะเปิดแอป Google Maps ซึ่งใช้ดูเส้นทางได้จริง
+  // (แผงเส้นทางในกล่อง embed เล็กๆ ใช้งานไม่ได้บนจอมือถือ)
+  mapDirectionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`,
 };
 
 export interface SocialLink {
