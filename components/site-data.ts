@@ -29,8 +29,8 @@ const mapQuery = "ห้างสรรพสินค้าพันธุ์�
 export const shopContact = {
   phone: "097-879-8996",
   phoneHref: "tel:0978798996",
-  email: "amkorn.n@gmail.com",
-  emailHref: "mailto:amkorn.n@gmail.com",
+  email: "kornandcoins@gmail.com",
+  emailHref: "mailto:kornandcoins@gmail.com",
   addressFloor: "ชั้น 7",
   addressPlace: "ห้างสรรพสินค้าพันธุ์ทิพย์ งามวงศ์วาน",
   mapUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`,
