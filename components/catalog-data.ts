@@ -1,6 +1,6 @@
 import type { ProductImage } from "./site-data";
 
-export type ProductCategory = "amulets" | "coins" | "collectibles" | "jewelry";
+export type ProductCategory = "gold" | "coins" | "amulets" | "jewelry";
 
 export interface CatalogProduct {
   id: string;
@@ -21,17 +21,17 @@ export interface CatalogProduct {
 }
 
 export const categoryLabels: Record<ProductCategory, string> = {
+  gold: "ทองคำ",
+  coins: "เหรียญ,ธนบัตร",
   amulets: "พระเครื่อง",
-  coins: "เหรียญ",
-  collectibles: "ของสะสม",
   jewelry: "เครื่องประดับ",
 };
 
 export const categoryDescriptions: Record<ProductCategory, string> = {
+  gold: "ทองคำแท่งและทองรูปพรรณ อยู่ระหว่างจัดเตรียมรายการ สอบถามราคาทองวันนี้กับทีมงานได้โดยตรง",
+  coins: "เหรียญไทย เหรียญกษาปณ์ ธนบัตร และเหรียญที่ระลึกจากหลายยุคสมัย",
   amulets: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร พร้อมภาพประกอบสำหรับสอบถามและตรวจสอบองค์จริง",
-  coins: "เหรียญไทย เหรียญกษาปณ์ และเหรียญที่ระลึกจากหลายยุคสมัย",
-  collectibles: "ของเก่า ของหายาก และของสะสมที่มีเรื่องราวจากหลายยุคสมัย",
-  jewelry: "เครื่องประดับทอง เพชร และอัญมณีคัดสรรสำหรับสวมใส่และสะสม",
+  jewelry: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรรจากหลากหลายยุคสมัย",
 };
 
 const galleryImage = (id: number, src: string, alt: string): ProductImage => ({ id, src, alt });
@@ -238,7 +238,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-amulet-cases",
     slug: "collectible-amulet-cases",
-    category: "collectibles",
+    category: "jewelry",
     name: "กล่องและตลับของสะสม",
     eyebrow: "อุปกรณ์สะสม · ของเก่า",
     shortDescription: "กล่อง ตลับ และบรรจุภัณฑ์เก่าสำหรับจัดเก็บพระเครื่องและเหรียญสะสม",
@@ -259,7 +259,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-shop-counter",
     slug: "collectible-shop-counter",
-    category: "collectibles",
+    category: "jewelry",
     name: "ของสะสมจากตู้หน้าร้าน",
     eyebrow: "ของเก่า · ของหายาก",
     shortDescription: "วัตถุสะสมหลากหลายชิ้นจากบรรยากาศหน้าร้าน สำหรับผู้ที่ชอบค้นหาของมีเรื่องราว",
@@ -280,7 +280,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-display-cabinet",
     slug: "collectible-display-cabinet",
-    category: "collectibles",
+    category: "jewelry",
     name: "ตู้จัดแสดงของสะสมวินเทจ",
     eyebrow: "เฟอร์นิเจอร์สะสม · ของเก่า",
     shortDescription: "ตู้จัดแสดงสไตล์วินเทจสำหรับผู้ที่ต้องการเพิ่มบรรยากาศให้คอลเลกชันที่บ้าน",
@@ -301,7 +301,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-banknote-set",
     slug: "collectible-banknote-set",
-    category: "collectibles",
+    category: "coins",
     name: "ธนบัตรและเอกสารสะสม",
     eyebrow: "กระดาษสะสม · ของเก่า",
     shortDescription: "ธนบัตรและเอกสารสะสมสำหรับคนที่ชอบเรื่องราวทางประวัติศาสตร์และการออกแบบ",
@@ -322,7 +322,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-calatrava-pilot",
     slug: "pp-calatrava-pilot-travel-time",
-    category: "collectibles",
+    category: "jewelry",
     name: "Patek Philippe Calatrava Pilot Travel Time โรสโกลด์",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "นาฬิกาสไตล์นักบิน ตัวเรือนทองโรสโกลด์ หน้าปัดโทนเข้ม พร้อมระบบสองเวลา LOCAL / HOME และสายหนังสีน้ำตาล",
@@ -342,7 +342,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-aquanaut-chrono",
     slug: "pp-aquanaut-chronograph",
-    category: "collectibles",
+    category: "jewelry",
     name: "Patek Philippe Aquanaut Chronograph สตีล",
     eyebrow: "นาฬิกาสะสม · มีคลิปวิดีโอ",
     shortDescription: "Aquanaut โครโนกราฟ ตัวเรือนสตีล หน้าปัดลายนูนสีเข้ม จับเวลาเข็มสีส้ม พร้อมสายยางสีดำ มีคลิปวิดีโอประกอบ",
@@ -362,7 +362,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-fm-vanguard-dragon",
     slug: "franck-muller-vanguard-dragon",
-    category: "collectibles",
+    category: "jewelry",
     name: "Franck Muller Vanguard มังกร หน้าปัดแดง",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Vanguard ทรงตอนโน หน้าปัดสีแดง ลายมังกรนูนสีเงิน เลขประยุกต์เรืองแสง ช่องวันที่ และสายหนังสีดำเย็บด้ายแดง",
@@ -382,7 +382,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-ap-royal-oak-offshore",
     slug: "ap-royal-oak-offshore-chronograph",
-    category: "collectibles",
+    category: "jewelry",
     name: "Audemars Piguet Royal Oak Offshore Chronograph สตีล",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Royal Oak Offshore โครโนกราฟ ตัวเรือนสตีล ขอบแปดเหลี่ยมยึดสกรู หน้าปัดลาย tapisserie สีเข้ม สายหนังสีดำเย็บด้ายแดง",
@@ -402,7 +402,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-aquanaut-luce-green",
     slug: "pp-aquanaut-luce-green-diamond",
-    category: "collectibles",
+    category: "jewelry",
     name: "Patek Philippe Aquanaut Luce หน้าปัดเขียว ขอบเพชร",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Aquanaut Luce ตัวเรือนทรงเบาะ ขอบตัวเรือนฝังเพชร หน้าปัดเขียวลายนูน ช่องวันที่ และสายยางสีเขียว",
@@ -421,7 +421,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-twenty-four",
     slug: "pp-twenty-four-diamond",
-    category: "collectibles",
+    category: "jewelry",
     name: "Patek Philippe Twenty~4 เรือนสุภาพสตรี ขอบเพชร",
     eyebrow: "นาฬิกาสะสม · มีคลิปวิดีโอ",
     shortDescription: "Twenty~4 ทรงมองต์ ตัวเรือนด้านข้างฝังเพชร หน้าปัดมุกขาว หลักโรมันและหลักเพชร พร้อมสายสตีล มีคลิปวิดีโอประกอบ",
@@ -480,7 +480,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-antique-silver-filigree",
     slug: "antique-silver-filigree-ware",
-    category: "collectibles",
+    category: "jewelry",
     name: "เครื่องเงินโบราณลายฉลุ",
     eyebrow: "ของเก่า · มีคลิปวิดีโอ",
     shortDescription: "เครื่องเงินโบราณงานลายฉลุ หูหิ้วขึ้นรูปสัตว์ พร้อมของสะสมเนื้อเงินอื่นในตู้ มีคลิปวิดีโอให้ชม",
@@ -577,7 +577,7 @@ export const catalogProducts: CatalogProduct[] = [
 export const featuredProducts = catalogProducts.slice(0, 6);
 
 export function isProductCategory(value: string | undefined): value is ProductCategory {
-  return value === "amulets" || value === "coins" || value === "collectibles" || value === "jewelry";
+  return value === "gold" || value === "coins" || value === "amulets" || value === "jewelry";
 }
 
 export function getProductBySlug(slug: string) {

@@ -160,9 +160,9 @@ function AdminOverview({
   products: CatalogProduct[];
   databaseConfigured: boolean;
 }) {
-  const amuletCount = products.filter((product) => product.category === "amulets").length;
+  const goldCount = products.filter((product) => product.category === "gold").length;
   const coinCount = products.filter((product) => product.category === "coins").length;
-  const collectibleCount = products.filter((product) => product.category === "collectibles").length;
+  const amuletCount = products.filter((product) => product.category === "amulets").length;
   const jewelryCount = products.filter((product) => product.category === "jewelry").length;
 
   return (
@@ -175,9 +175,9 @@ function AdminOverview({
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <AdminStat icon="inventory" label="รายการทั้งหมด" value={products.length} detail="รายการในแคตตาล็อก" />
+        <AdminStat icon="shield" label="ทองคำ" value={goldCount} detail="รายการพร้อมชม" />
+        <AdminStat icon="tag" label="เหรียญ,ธนบัตร" value={coinCount} detail="รายการพร้อมชม" />
         <AdminStat icon="landmark" label="พระเครื่อง" value={amuletCount} detail="รายการพร้อมชม" />
-        <AdminStat icon="tag" label="เหรียญ" value={coinCount} detail="รายการพร้อมชม" />
-        <AdminStat icon="images" label="ของสะสม" value={collectibleCount} detail="รายการพร้อมชม" />
         <AdminStat icon="images" label="เครื่องประดับ" value={jewelryCount} detail="รายการพร้อมชม" />
       </div>
 
@@ -246,11 +246,11 @@ function AdminAddItemPanel({
     const form = event.currentTarget;
     const formData = new FormData(form);
     const categoryMap: Record<string, ProductCategory> = {
-      พระเครื่อง: "amulets",
+      ทองคำ: "gold",
       เหรียญ: "coins",
-      ธนบัตร: "collectibles",
-      วัตถุมงคล: "collectibles",
-      "ของสะสมอื่นๆ": "collectibles",
+      ธนบัตร: "coins",
+      พระเครื่อง: "amulets",
+      วัตถุมงคล: "amulets",
       เครื่องประดับ: "jewelry",
     };
     const categoryLabel = String(formData.get("category") ?? "");
@@ -315,7 +315,7 @@ function AdminAddItemPanel({
       <form ref={formRef} className="space-y-stack-xl" onSubmit={submitProduct}>
         <FormSection icon="category" title="01. การจัดหมวดหมู่">
           <div className="grid grid-cols-1 gap-gutter pt-stack-sm md:grid-cols-2">
-            <SelectField id="category" label="หมวดหมู่หลัก" placeholder="เลือกหมวดหมู่..." options={["พระเครื่อง", "เหรียญ", "ธนบัตร", "วัตถุมงคล", "ของสะสมอื่นๆ", "เครื่องประดับ"]} required />
+            <SelectField id="category" label="หมวดหมู่หลัก" placeholder="เลือกหมวดหมู่..." options={["ทองคำ", "เหรียญ", "ธนบัตร", "พระเครื่อง", "วัตถุมงคล", "เครื่องประดับ"]} required />
             <SelectField id="subcategory" label="หมวดหมู่ย่อย" placeholder="เลือกหมวดหมู่ย่อย..." options={["เหรียญทอง", "เหรียญที่ระลึก", "พระเนื้อผง", "พระเนื้อโลหะ"]} />
           </div>
         </FormSection>
