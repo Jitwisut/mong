@@ -58,6 +58,22 @@ export const socialLinks: SocialLink[] = [
 export const categories: Category[] = [
   {
     id: 1,
+    name: "ทองคำ",
+    description: "ทองคำแท่งและทองรูปพรรณ อยู่ระหว่างจัดเตรียมรายการ สอบถามราคาทองวันนี้ได้โดยตรง",
+    image: "/images/coin-red-case.jpg",
+    alt: "เหรียญทองคำจำนวนมากในตลับสีแดง",
+    href: "/watches/rolex-submariner?category=gold",
+  },
+  {
+    id: 2,
+    name: "เหรียญ,ธนบัตร",
+    description: "เหรียญไทย เหรียญกษาปณ์ ธนบัตร และเหรียญที่ระลึกจากหลายยุคสมัย",
+    image: "/images/category-coins-wikimedia.jpg",
+    alt: "เหรียญไทยหลายชนิดจัดแสดงรวมกัน",
+    href: "/watches/rolex-submariner?category=coins",
+  },
+  {
+    id: 3,
     name: "พระเครื่อง",
     description: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร พร้อมคำแนะนำจากผู้เชี่ยวชาญ",
     image: "/images/category-amulets-wikimedia.jpg",
@@ -65,20 +81,12 @@ export const categories: Category[] = [
     href: "/watches/rolex-submariner?category=amulets",
   },
   {
-    id: 2,
-    name: "เหรียญ",
-    description: "เหรียญไทย เหรียญกษาปณ์ และเหรียญที่ระลึกจากหลายยุคสมัย",
-    image: "/images/category-coins-wikimedia.jpg",
-    alt: "เหรียญไทยหลายชนิดจัดแสดงรวมกัน",
-    href: "/watches/rolex-submariner?category=coins",
-  },
-  {
-    id: 3,
-    name: "ของสะสม",
-    description: "ของเก่า ของหายาก และของสะสมที่มีเรื่องราวจากหลายยุคสมัย",
-    image: "/images/category-collectibles-wikimedia.jpg",
-    alt: "ตู้ไม้โบราณสำหรับจัดแสดงของสะสมและวัตถุเก่า",
-    href: "/watches/rolex-submariner?category=collectibles",
+    id: 4,
+    name: "เครื่องประดับ",
+    description: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรรจากหลากหลายยุคสมัย",
+    image: "/images/diamond-gemstone-jewelry-tray-poster.jpg",
+    alt: "ถาดเครื่องประดับเพชรและพลอยสีคัดสรร",
+    href: "/watches/rolex-submariner?category=jewelry",
   },
 ];
 

@@ -42,7 +42,7 @@ export default async function HomePage() {
                 className="relative font-body-lg text-body-lg text-on-surface-variant max-w-md font-thai-support"
                 style={{ transitionDelay: "0.2s" }}
               >
-                ศูนย์รวมพระเครื่อง เหรียญ และของสะสม ผ่านการคัดสรร ตรวจสอบ และส่งต่อระหว่างนักสะสม
+                ศูนย์รวมทองคำ เหรียญ ธนบัตร พระเครื่อง และเครื่องประดับ ผ่านการคัดสรร ตรวจสอบ และส่งต่อระหว่างนักสะสม
               </Reveal>
               <Reveal as="div" className="relative flex flex-wrap gap-4" style={{ transitionDelay: "0.4s" }}>
                 <Link className="btn-primary" href="#categories">
@@ -91,7 +91,7 @@ export default async function HomePage() {
               ดูสินค้าทั้งหมด <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
               <Reveal key={category.id} className="h-80" style={{ transitionDelay: `${category.id - 1}00ms` }}>
                 <Link className="group relative h-80 overflow-hidden block border border-outline-variant transition-colors duration-300 hover:border-primary" href={category.href}>
@@ -122,7 +122,7 @@ export default async function HomePage() {
               <div>
                 <p className="font-label-caps text-label-caps text-primary">KORN &amp; COINS MARKET</p>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">สินค้าที่คัดสรรไว้ให้ชม</h2>
-                <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">ชมพระเครื่อง เหรียญ และของสะสมหลายรายการในสไตล์แคตตาล็อก พร้อมกดดูรายละเอียดและสอบถามทีมงานได้ทันที</p>
+                <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">ชมทองคำ เหรียญ ธนบัตร พระเครื่อง และเครื่องประดับหลายรายการในสไตล์แคตตาล็อก พร้อมกดดูรายละเอียดและสอบถามทีมงานได้ทันที</p>
               </div>
               <Link className="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary hover:text-on-surface" href="/watches/rolex-submariner">
                 ดูสินค้าทั้งหมด <span aria-hidden="true">→</span>

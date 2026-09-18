@@ -39,16 +39,15 @@ function createSlug(value: string) {
 
 function readCategory(value: string): ProductCategory | null {
   const categoryMap: Record<string, ProductCategory> = {
-    amulets: "amulets",
+    gold: "gold",
     coins: "coins",
-    collectibles: "collectibles",
+    amulets: "amulets",
     jewelry: "jewelry",
-    พระเครื่อง: "amulets",
+    ทองคำ: "gold",
     เหรียญ: "coins",
-    ธนบัตร: "collectibles",
-    วัตถุมงคล: "collectibles",
-    ของสะสม: "collectibles",
-    "ของสะสมอื่นๆ": "collectibles",
+    ธนบัตร: "coins",
+    พระเครื่อง: "amulets",
+    วัตถุมงคล: "amulets",
     เครื่องประดับ: "jewelry",
   };
 

@@ -7,7 +7,7 @@ import { Icon } from "./icons";
 import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistPanel, useWishlist } from "./wishlist";
 
-export type ActiveNav = "home" | "amulets" | "coins" | "collectibles" | "jewelry" | "services" | null;
+export type ActiveNav = "home" | "gold" | "coins" | "amulets" | "jewelry" | "services" | null;
 export type PublicNavVariant = "home" | "product" | "contact";
 
 interface PublicNavProps {
@@ -19,17 +19,18 @@ interface PublicNavProps {
 
 const navItems = [
   { label: "หน้าแรก", href: "/", key: "home" },
-  { label: "ทองคำ", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
+  { label: "ทองคำ", href: "/watches/rolex-submariner?category=gold", key: "gold" },
   { label: "เหรียญ,ธนบัตร", href: "/watches/rolex-submariner?category=coins", key: "coins" },
-  { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=collectibles", key: "collectibles" },
+  { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
   { label: "บริการ", href: "/contact", key: "services" },
   { label: "เครื่องประดับ", href: "/watches/rolex-submariner?category=jewelry", key: "jewelry" },
 ] as const;
 
 const baseSearchItems = [
+  { label: "ทองคำ", description: "ทองคำแท่งและทองรูปพรรณ อยู่ระหว่างจัดเตรียมรายการ", href: "/watches/rolex-submariner?category=gold" },
+  { label: "เหรียญ,ธนบัตร", description: "เหรียญไทย เหรียญกษาปณ์ ธนบัตร และเหรียญที่ระลึก", href: "/watches/rolex-submariner?category=coins" },
   { label: "พระเครื่อง", description: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร", href: "/watches/rolex-submariner?category=amulets" },
-  { label: "เหรียญ", description: "เหรียญไทย เหรียญกษาปณ์ และเหรียญที่ระลึก", href: "/watches/rolex-submariner?category=coins" },
-  { label: "ของสะสม", description: "ของเก่า ของหายาก และของสะสมจากหลายยุคสมัย", href: "/watches/rolex-submariner?category=collectibles" },
+  { label: "เครื่องประดับ", description: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรร", href: "/watches/rolex-submariner?category=jewelry" },
   { label: "บริการรับซื้อ–ขาย", description: "ประเมิน ตรวจสอบ และให้คำปรึกษา", href: "/contact" },
   { label: "ติดต่อ KORN & COINS", description: "สอบถามข้อมูลและนัดหมายเข้าชมร้าน", href: "/contact" },
 ];
