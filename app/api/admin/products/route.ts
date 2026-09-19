@@ -43,12 +43,14 @@ function readCategory(value: string): ProductCategory | null {
     coins: "coins",
     amulets: "amulets",
     jewelry: "jewelry",
+    watches: "watches",
     ทองคำ: "gold",
     เหรียญ: "coins",
     ธนบัตร: "coins",
     พระเครื่อง: "amulets",
     วัตถุมงคล: "amulets",
     เครื่องประดับ: "jewelry",
+    นาฬิกา: "watches",
   };
 
   return categoryMap[value] ?? (isProductCategory(value) ? value : null);

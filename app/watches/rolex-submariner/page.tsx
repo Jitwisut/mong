@@ -29,7 +29,7 @@ export async function generateMetadata({ searchParams }: CatalogPageProps): Prom
 
   return {
     title,
-    description: category ? categoryDescriptions[category] : "เลือกชมทองคำ เหรียญ ธนบัตร พระเครื่อง และเครื่องประดับหลายรายการจาก KORN & COINS",
+    description: category ? categoryDescriptions[category] : "เลือกชมทองคำ เหรียญ ธนบัตร พระเครื่อง เครื่องประดับ และนาฬิกาหลายรายการจาก KORN & COINS",
   };
 }
 
@@ -43,7 +43,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   const heading = selectedCategory ? categoryLabels[selectedCategory] : "สินค้าทั้งหมด";
   const intro = selectedCategory
     ? categoryDescriptions[selectedCategory]
-    : "เลือกชมทองคำ เหรียญ ธนบัตร พระเครื่อง และเครื่องประดับหลายรายการ พร้อมรายละเอียดและช่องทางสอบถามกับทีมงาน";
+    : "เลือกชมทองคำ เหรียญ ธนบัตร พระเครื่อง เครื่องประดับ และนาฬิกาหลายรายการ พร้อมรายละเอียดและช่องทางสอบถามกับทีมงาน";
 
   return (
     <div className="min-h-screen flex flex-col font-body-md">
