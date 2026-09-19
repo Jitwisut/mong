@@ -98,8 +98,7 @@ export async function getCatalogProducts(): Promise<CatalogProduct[]> {
       `SELECT ${productColumns} FROM products ORDER BY created_at DESC, id ASC`,
     );
 
-    // Keep the storefront useful before the first migration/seed is run.
-    return result.rows.length > 0 ? result.rows.map(rowToProduct) : catalogProducts;
+    return result.rows.map(rowToProduct);
   } catch (error) {
     console.error("Catalog database read failed; using static catalog fallback.", error);
     return catalogProducts;
@@ -117,7 +116,7 @@ export async function getCatalogProductBySlug(slug: string): Promise<CatalogProd
       [slug],
     );
 
-    return result.rows[0] ? rowToProduct(result.rows[0]) : getProductBySlug(slug);
+    return result.rows[0] ? rowToProduct(result.rows[0]) : undefined;
   } catch (error) {
     console.error("Catalog product read failed; using static catalog fallback.", error);
     return getProductBySlug(slug);
@@ -144,7 +143,7 @@ export async function getRelatedCatalogProducts(product: CatalogProduct, limit =
       [product.category, product.id, limit],
     );
 
-    return result.rows.length > 0 ? result.rows.map(rowToProduct) : getRelatedProducts(product, limit);
+    return result.rows.map(rowToProduct);
   } catch (error) {
     console.error("Related catalog read failed; using static catalog fallback.", error);
     return getRelatedProducts(product, limit);
@@ -182,4 +181,17 @@ export async function createCatalogProduct(input: CreateCatalogProductInput): Pr
   );
 
   return rowToProduct(result.rows[0]);
+}
+
+export async function deleteCatalogProduct(id: string): Promise<CatalogProduct | null> {
+  if (!postgresPool) {
+    throw new Error("DATABASE_NOT_CONFIGURED");
+  }
+
+  const result = await postgresPool.query<ProductRow>(
+    `DELETE FROM products WHERE id = $1 RETURNING ${productColumns}`,
+    [id],
+  );
+
+  return result.rows[0] ? rowToProduct(result.rows[0]) : null;
 }
