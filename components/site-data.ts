@@ -83,10 +83,18 @@ export const categories: Category[] = [
   {
     id: 4,
     name: "เครื่องประดับ",
-    description: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรรจากหลากหลายยุคสมัย",
+    description: "เครื่องประดับและของสะสมคัดสรรจากหลากหลายยุคสมัย",
     image: "/images/diamond-gemstone-jewelry-tray-poster.jpg",
     alt: "ถาดเครื่องประดับเพชรและพลอยสีคัดสรร",
     href: "/watches/rolex-submariner?category=jewelry",
+  },
+  {
+    id: 5,
+    name: "นาฬิกา",
+    description: "นาฬิกาหรูคัดสรร พร้อมภาพสินค้าจริงและรายละเอียดชุดกล่อง–ใบรับประกัน",
+    image: "/images/pp-calatrava-pilot-01.jpg",
+    alt: "นาฬิกาหรู Patek Philippe Calatrava Pilot Travel Time ตัวเรือนทองโรสโกลด์",
+    href: "/watches/rolex-submariner?category=watches",
   },
 ];
 

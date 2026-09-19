@@ -24,8 +24,8 @@ const notoSansThai = Noto_Sans_Thai({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "KORN & COINS | ทองคำ เหรียญ พระเครื่อง และเครื่องประดับ",
-  description: "ร้าน KORN & COINS รับซื้อ ขาย ประเมิน และตรวจสอบทองคำ เหรียญ ธนบัตร พระเครื่อง และเครื่องประดับ",
+  title: "KORN & COINS | ทองคำ เหรียญ พระเครื่อง เครื่องประดับ และนาฬิกา",
+  description: "ร้าน KORN & COINS รับซื้อ ขาย ประเมิน และตรวจสอบทองคำ เหรียญ ธนบัตร พระเครื่อง เครื่องประดับ และนาฬิกาหรู",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -1,6 +1,6 @@
 import type { ProductImage } from "./site-data";
 
-export type ProductCategory = "gold" | "coins" | "amulets" | "jewelry";
+export type ProductCategory = "gold" | "coins" | "amulets" | "jewelry" | "watches";
 
 export interface CatalogProduct {
   id: string;
@@ -25,13 +25,15 @@ export const categoryLabels: Record<ProductCategory, string> = {
   coins: "เหรียญ,ธนบัตร",
   amulets: "พระเครื่อง",
   jewelry: "เครื่องประดับ",
+  watches: "นาฬิกา",
 };
 
 export const categoryDescriptions: Record<ProductCategory, string> = {
   gold: "ทองคำแท่งและทองรูปพรรณ อยู่ระหว่างจัดเตรียมรายการ สอบถามราคาทองวันนี้กับทีมงานได้โดยตรง",
   coins: "เหรียญไทย เหรียญกษาปณ์ ธนบัตร และเหรียญที่ระลึกจากหลายยุคสมัย",
   amulets: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร พร้อมภาพประกอบสำหรับสอบถามและตรวจสอบองค์จริง",
-  jewelry: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรรจากหลากหลายยุคสมัย",
+  jewelry: "เครื่องประดับและของสะสมคัดสรรจากหลากหลายยุคสมัย",
+  watches: "นาฬิกาหรูคัดสรร พร้อมภาพสินค้าจริงและรายละเอียดชุดกล่อง–ใบรับประกัน",
 };
 
 const galleryImage = (id: number, src: string, alt: string): ProductImage => ({ id, src, alt });
@@ -322,7 +324,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-calatrava-pilot",
     slug: "pp-calatrava-pilot-travel-time",
-    category: "jewelry",
+    category: "watches",
     name: "Patek Philippe Calatrava Pilot Travel Time โรสโกลด์",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "นาฬิกาสไตล์นักบิน ตัวเรือนทองโรสโกลด์ หน้าปัดโทนเข้ม พร้อมระบบสองเวลา LOCAL / HOME และสายหนังสีน้ำตาล",
@@ -342,7 +344,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-aquanaut-chrono",
     slug: "pp-aquanaut-chronograph",
-    category: "jewelry",
+    category: "watches",
     name: "Patek Philippe Aquanaut Chronograph สตีล",
     eyebrow: "นาฬิกาสะสม · มีคลิปวิดีโอ",
     shortDescription: "Aquanaut โครโนกราฟ ตัวเรือนสตีล หน้าปัดลายนูนสีเข้ม จับเวลาเข็มสีส้ม พร้อมสายยางสีดำ มีคลิปวิดีโอประกอบ",
@@ -362,7 +364,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-fm-vanguard-dragon",
     slug: "franck-muller-vanguard-dragon",
-    category: "jewelry",
+    category: "watches",
     name: "Franck Muller Vanguard มังกร หน้าปัดแดง",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Vanguard ทรงตอนโน หน้าปัดสีแดง ลายมังกรนูนสีเงิน เลขประยุกต์เรืองแสง ช่องวันที่ และสายหนังสีดำเย็บด้ายแดง",
@@ -382,7 +384,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-ap-royal-oak-offshore",
     slug: "ap-royal-oak-offshore-chronograph",
-    category: "jewelry",
+    category: "watches",
     name: "Audemars Piguet Royal Oak Offshore Chronograph สตีล",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Royal Oak Offshore โครโนกราฟ ตัวเรือนสตีล ขอบแปดเหลี่ยมยึดสกรู หน้าปัดลาย tapisserie สีเข้ม สายหนังสีดำเย็บด้ายแดง",
@@ -402,7 +404,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-aquanaut-luce-green",
     slug: "pp-aquanaut-luce-green-diamond",
-    category: "jewelry",
+    category: "watches",
     name: "Patek Philippe Aquanaut Luce หน้าปัดเขียว ขอบเพชร",
     eyebrow: "นาฬิกาสะสม · ภาพสินค้าจริง",
     shortDescription: "Aquanaut Luce ตัวเรือนทรงเบาะ ขอบตัวเรือนฝังเพชร หน้าปัดเขียวลายนูน ช่องวันที่ และสายยางสีเขียว",
@@ -421,7 +423,7 @@ export const catalogProducts: CatalogProduct[] = [
   {
     id: "collectible-pp-twenty-four",
     slug: "pp-twenty-four-diamond",
-    category: "jewelry",
+    category: "watches",
     name: "Patek Philippe Twenty~4 เรือนสุภาพสตรี ขอบเพชร",
     eyebrow: "นาฬิกาสะสม · มีคลิปวิดีโอ",
     shortDescription: "Twenty~4 ทรงมองต์ ตัวเรือนด้านข้างฝังเพชร หน้าปัดมุกขาว หลักโรมันและหลักเพชร พร้อมสายสตีล มีคลิปวิดีโอประกอบ",
@@ -577,7 +579,7 @@ export const catalogProducts: CatalogProduct[] = [
 export const featuredProducts = catalogProducts.slice(0, 6);
 
 export function isProductCategory(value: string | undefined): value is ProductCategory {
-  return value === "gold" || value === "coins" || value === "amulets" || value === "jewelry";
+  return value === "gold" || value === "coins" || value === "amulets" || value === "jewelry" || value === "watches";
 }
 
 export function getProductBySlug(slug: string) {

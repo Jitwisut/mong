@@ -7,7 +7,7 @@ import { Icon } from "./icons";
 import { useModalDismiss } from "./use-modal-dismiss";
 import { WishlistPanel, useWishlist } from "./wishlist";
 
-export type ActiveNav = "home" | "gold" | "coins" | "amulets" | "jewelry" | "services" | null;
+export type ActiveNav = "home" | "gold" | "coins" | "amulets" | "jewelry" | "watches" | "services" | null;
 export type PublicNavVariant = "home" | "product" | "contact";
 
 interface PublicNavProps {
@@ -22,15 +22,17 @@ const navItems = [
   { label: "ทองคำ", href: "/watches/rolex-submariner?category=gold", key: "gold" },
   { label: "เหรียญ,ธนบัตร", href: "/watches/rolex-submariner?category=coins", key: "coins" },
   { label: "พระเครื่อง", href: "/watches/rolex-submariner?category=amulets", key: "amulets" },
-  { label: "บริการ", href: "/contact", key: "services" },
   { label: "เครื่องประดับ", href: "/watches/rolex-submariner?category=jewelry", key: "jewelry" },
+  { label: "นาฬิกา", href: "/watches/rolex-submariner?category=watches", key: "watches" },
+  { label: "บริการ", href: "/contact", key: "services" },
 ] as const;
 
 const baseSearchItems = [
   { label: "ทองคำ", description: "ทองคำแท่งและทองรูปพรรณ อยู่ระหว่างจัดเตรียมรายการ", href: "/watches/rolex-submariner?category=gold" },
   { label: "เหรียญ,ธนบัตร", description: "เหรียญไทย เหรียญกษาปณ์ ธนบัตร และเหรียญที่ระลึก", href: "/watches/rolex-submariner?category=coins" },
   { label: "พระเครื่อง", description: "พระพิมพ์ไทยและวัตถุมงคลคัดสรร", href: "/watches/rolex-submariner?category=amulets" },
-  { label: "เครื่องประดับ", description: "เครื่องประดับ นาฬิกาหรู และของสะสมคัดสรร", href: "/watches/rolex-submariner?category=jewelry" },
+  { label: "เครื่องประดับ", description: "เครื่องประดับและของสะสมคัดสรร", href: "/watches/rolex-submariner?category=jewelry" },
+  { label: "นาฬิกา", description: "นาฬิกาหรูคัดสรร พร้อมภาพสินค้าจริง", href: "/watches/rolex-submariner?category=watches" },
   { label: "บริการรับซื้อ–ขาย", description: "ประเมิน ตรวจสอบ และให้คำปรึกษา", href: "/contact" },
   { label: "ติดต่อ KORN & COINS", description: "สอบถามข้อมูลและนัดหมายเข้าชมร้าน", href: "/contact" },
 ];
