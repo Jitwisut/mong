@@ -141,7 +141,7 @@ export function AdminDashboard({ products, databaseConfigured, inquiries, inquir
           <div className="mx-auto max-w-5xl pb-stack-xl">
             {activeSection === "overview" ? <AdminOverview onSelect={selectSection} products={products} databaseConfigured={databaseConfigured} /> : null}
             {activeSection === "add-item" ? <AdminAddItemPanel formRef={addItemFormRef} onCreated={handleProductCreated} /> : null}
-            {activeSection === "inventory" ? <AdminInventory products={products} /> : null}
+            {activeSection === "inventory" ? <AdminInventory products={products} onDeleted={() => router.refresh()} /> : null}
             {activeSection === "sales" ? <AdminSales counts={inquiryCounts} databaseConfigured={databaseConfigured} inquiries={inquiries} /> : null}
             {activeSection === "settings" ? <AdminSettings /> : null}
           </div>
@@ -238,6 +238,9 @@ function AdminAddItemPanel({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ tone: "success" | "error"; message: string } | null>(null);
+  // form.reset() ล้างได้แค่ช่องใน DOM ส่วนรูปที่อัปโหลดแล้วเก็บอยู่ใน state ของ UploadArea
+  // ถ้าไม่รีเซ็ตด้วย สินค้าชิ้นถัดไปจะติดรูปของชิ้นก่อนหน้าไปเงียบๆ
+  const [uploadResetKey, setUploadResetKey] = useState(0);
 
   const submitProduct = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -268,6 +271,16 @@ function AdminAddItemPanel({
     const price = rawPrice && Number.isFinite(priceNumber) && priceNumber > 0
       ? `฿${new Intl.NumberFormat("th-TH").format(priceNumber)}`
       : "สอบถามราคา";
+    const image = String(formData.get("image") ?? "").trim();
+    const gallery = [image, String(formData.get("galleryOne") ?? "").trim(), String(formData.get("galleryTwo") ?? "").trim()]
+      .filter(Boolean)
+      .map((src, index) => ({ id: index, src, alt: name }));
+
+    if (!image) {
+      setFeedback({ tone: "error", message: "กรุณาอัปโหลดภาพหลักก่อนบันทึกสินค้า" });
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch("/api/admin/products", {
@@ -280,7 +293,8 @@ function AdminAddItemPanel({
           eyebrow: [categoryLabel, subcategory].filter(Boolean).join(" · "),
           shortDescription: String(formData.get("shortDescription") ?? "").trim(),
           description,
-          image: String(formData.get("image") ?? "").trim(),
+          image,
+          gallery,
           year: String(formData.get("year") ?? "").trim(),
           material: String(formData.get("material") ?? "").trim(),
           condition: String(formData.get("condition") ?? "").trim(),
@@ -300,6 +314,7 @@ function AdminAddItemPanel({
 
       setFeedback({ tone: "success", message: "เพิ่มสินค้าเข้าสู่ PostgreSQL แล้ว" });
       form.reset();
+      setUploadResetKey((key) => key + 1);
       onCreated();
     } catch {
       setFeedback({ tone: "error", message: "เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาลองใหม่" });
@@ -323,16 +338,13 @@ function AdminAddItemPanel({
           </div>
         </FormSection>
 
-        <FormSection icon="images" title="02. รูปภาพสินค้า" aside="แนะนำภาพความละเอียดสูง">
+        <FormSection icon="images" title="02. รูปภาพสินค้า" aside="ภาพหลักจำเป็นต้องมี">
           <div className="grid h-[400px] grid-cols-3 gap-4 pt-stack-sm">
-            <UploadArea className="col-span-2 row-span-2" icon="image-plus" label="อัปโหลดภาพหลัก" detail="JPEG, PNG ไม่เกิน 20MB" large sampleSrc="/images/coins-overhead.jpg" sampleAlt="ภาพตัวอย่างเหรียญสะสม" />
-            <UploadArea label="ภาพรายละเอียด" sampleSrc="/images/amulet-closeup.jpg" sampleAlt="ภาพตัวอย่างพระเครื่อง" />
-            <UploadArea label="ภาพประกอบ" sampleSrc="/images/coin-medallion.jpg" sampleAlt="ภาพตัวอย่างเหรียญในกล่อง" />
+            <UploadArea key={`image-${uploadResetKey}`} className="col-span-2 row-span-2" icon="image-plus" label="อัปโหลดภาพหลัก" detail="JPEG, PNG หรือ WebP" large name="image" />
+            <UploadArea key={`gallery-one-${uploadResetKey}`} label="ภาพรายละเอียด" name="galleryOne" />
+            <UploadArea key={`gallery-two-${uploadResetKey}`} label="ภาพประกอบ" name="galleryTwo" />
           </div>
-          <div className="mt-stack-md">
-            <TextField id="image" label="พาธรูปหลักใน public" placeholder="เช่น /images/amulet-closeup.jpg" defaultValue="/images/coins-overhead.jpg" required />
-            <p className="mt-2 font-body-md text-sm leading-6 text-on-surface-variant">ตอนนี้ช่องอัปโหลดใช้สำหรับดูตัวอย่างหน้าจอ ให้ใส่พาธรูปที่อยู่ในโฟลเดอร์ <code>public/</code> เพื่อบันทึกลงรายการ</p>
-          </div>
+          <p className="mt-stack-md font-body-md text-sm leading-6 text-on-surface-variant">กดที่กรอบเพื่อเลือกไฟล์จากเครื่อง ระบบจะย่อขนาดภาพให้อัตโนมัติแล้วอัปโหลดทันที รอจนขึ้นว่า &ldquo;อัปโหลดแล้ว&rdquo; ก่อนกดบันทึก</p>
         </FormSection>
 
         <FormSection icon="info" title="03. รายละเอียดวัตถุสะสม">
@@ -380,14 +392,47 @@ function AdminAddItemPanel({
   );
 }
 
-function AdminInventory({ products }: { products: CatalogProduct[] }) {
+function AdminInventory({ products, onDeleted }: { products: CatalogProduct[]; onDeleted: () => void }) {
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<{ tone: "success" | "error"; message: string } | null>(null);
+
+  const deleteProduct = async (product: CatalogProduct) => {
+    if (!window.confirm(`ลบ "${product.name}" ออกจากแคตตาล็อกถาวรหรือไม่? การลบนี้ย้อนกลับไม่ได้`)) {
+      return;
+    }
+
+    setPendingId(product.id);
+    setFeedback(null);
+
+    try {
+      const response = await fetch(`/api/admin/products/${encodeURIComponent(product.id)}`, { method: "DELETE" });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const message = typeof result === "object" && result !== null && "error" in result && typeof result.error === "string"
+          ? result.error
+          : "ลบสินค้าไม่สำเร็จ";
+        setFeedback({ tone: "error", message });
+        return;
+      }
+
+      setFeedback({ tone: "success", message: `ลบ "${product.name}" แล้ว` });
+      onDeleted();
+    } catch {
+      setFeedback({ tone: "error", message: "เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ กรุณาลองใหม่" });
+    } finally {
+      setPendingId(null);
+    }
+  };
+
   return (
     <section className="space-y-stack-lg" id="inventory">
       <div>
         <p className="font-label-caps text-label-caps tracking-widest text-primary">CATALOG INVENTORY</p>
         <h2 className="mt-2 font-display-lg text-display-lg-mobile text-on-surface md:text-display-lg">รายการสินค้าปัจจุบัน</h2>
-        <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">ตรวจสอบรายการที่แสดงอยู่ในหน้าร้าน และกดชื่อสินค้าเพื่อดูหน้ารายละเอียดสาธารณะ</p>
+        <p className="mt-3 max-w-2xl font-body-lg text-body-lg leading-7 text-on-surface-variant">ตรวจสอบรายการที่แสดงอยู่ในหน้าร้าน กดชื่อสินค้าเพื่อดูหน้ารายละเอียดสาธารณะ หรือกดลบเพื่อเอาออกจากแคตตาล็อก</p>
       </div>
+      {feedback ? <p className={`border-l-2 px-4 py-3 font-body-md text-sm ${feedback.tone === "success" ? "border-primary text-primary" : "border-error text-error"}`} role="status">{feedback.message}</p> : null}
       <div className="overflow-x-auto border border-outline-variant bg-surface-container-lowest">
         <table className="min-w-full text-left">
           <thead className="border-b border-outline-variant bg-surface-container-low">
@@ -396,6 +441,7 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
               <th className="px-5 py-4">หมวดหมู่</th>
               <th className="px-5 py-4">สถานะ</th>
               <th className="px-5 py-4 text-right">ราคา</th>
+              <th className="px-5 py-4 text-right">จัดการ</th>
             </tr>
           </thead>
           <tbody>
@@ -408,6 +454,17 @@ function AdminInventory({ products }: { products: CatalogProduct[] }) {
                 <td className="whitespace-nowrap px-5 py-4 font-body-md text-sm text-on-surface-variant">{categoryLabels[product.category]}</td>
                 <td className="whitespace-nowrap px-5 py-4"><span className="bg-secondary px-2 py-1 font-label-caps text-label-caps tracking-wider text-on-secondary">{product.status}</span></td>
                 <td className="whitespace-nowrap px-5 py-4 text-right font-body-md font-semibold text-primary">{product.price}</td>
+                <td className="whitespace-nowrap px-5 py-4 text-right">
+                  <button
+                    className="inline-flex min-h-11 items-center gap-2 border border-outline-variant px-3 py-2 font-label-caps text-label-caps text-on-surface-variant transition-colors hover:border-error hover:text-error disabled:cursor-wait disabled:opacity-60"
+                    disabled={pendingId === product.id}
+                    onClick={() => deleteProduct(product)}
+                    type="button"
+                  >
+                    <Icon name="close" size={16} />
+                    {pendingId === product.id ? "กำลังลบ..." : "ลบ"}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

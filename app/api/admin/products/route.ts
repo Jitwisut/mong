@@ -96,7 +96,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "กรุณาระบุชื่อสินค้าและหมวดหมู่" }, { status: 400 });
     }
 
-    const image = readString(rawBody, "image") || "/images/coins-overhead.jpg";
+    const image = readString(rawBody, "image");
+
+    if (!image) {
+      return NextResponse.json({ error: "กรุณาอัปโหลดภาพหลักของสินค้า" }, { status: 400 });
+    }
+
     const description = readString(rawBody, "description") || `รายละเอียดของ ${name}`;
     const product = await createCatalogProduct({
       id: readString(rawBody, "id") || randomUUID(),
